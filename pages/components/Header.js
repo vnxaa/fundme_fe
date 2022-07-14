@@ -4,13 +4,17 @@ import Web3Modal from 'web3modal'
 import {ethers} from 'ethers'
 import Axios from "axios";
 import {useEffect, useState} from 'react'
+import Profile from '../Profile';
 
 
 export default function Header() {
 
     const [address, setAddress] = useState([])
     const [isLogin, setLogin] = useState(false)
-
+    useEffect(()=> {
+        connect()
+      }, [])
+    
     async function login(address){
         let promise = Axios({
             url: "http://localhost:5000/api/auth/login",
@@ -28,7 +32,7 @@ export default function Header() {
 
             setLogin(true)
     }
-    async function connect(e){
+    async function connect(){
         const web3Modal = new Web3Modal()
         const connection = await web3Modal.connect()
         const provider = new ethers.providers.Web3Provider(connection)
@@ -52,25 +56,25 @@ export default function Header() {
                         </a>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <Link href="/discover">
+                                <Link href="/Discover">
                                     <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Discover
                                     </a>
                                 </Link>
 
-                                <Link href='/campaign'>
+                                <Link href='/Campaign'>
                                     <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Create Campaign
                                     </a>
                                 </Link>
 
-                                <Link href="/market">
+                                <Link href="/Market">
                                     <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Market
                                     </a>
                                 </Link>
 
-                                <Link href="/profile">                      
+                                <Link href="/Profile">                      
                                     <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Profile
                                     </a>
@@ -144,6 +148,7 @@ export default function Header() {
                 </div>
             </div> */}
         </nav>
+
     </div>
   )
 }
