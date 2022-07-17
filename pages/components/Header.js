@@ -47,7 +47,7 @@ export default function Header() {
   
   return (
     <div>
-        <nav className="bg-gray dark:bg-gray-800  shadow ">
+        <nav className="bg-slate-700 dark:bg-gray-800  shadow ">
             <div className="max-w-7xl mx-auto px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className=" flex items-center">
@@ -57,25 +57,25 @@ export default function Header() {
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <Link href="/Discover">
-                                    <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
+                                    <a className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Discover
                                     </a>
                                 </Link>
 
                                 <Link href='/Campaign'>
-                                    <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
+                                    <a className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Create Campaign
                                     </a>
                                 </Link>
 
                                 <Link href="/Market">
-                                    <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
+                                    <a className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Market
                                     </a>
                                 </Link>
 
                                 <Link href="/Profile">                      
-                                    <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
+                                    <a className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                         Profile
                                     </a>
                                 </Link>
@@ -88,7 +88,11 @@ export default function Header() {
                                 <div className="relative inline-block text-left">
                                     <div>       
                                                 {
-                                                isLogin ? <p>{address}</p> :  <button onClick={connect}type="button" className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500" id="options-menu">
+                                                isLogin ? 
+                                                <span className="px-4 py-2  text-base rounded-full text-white  bg-gray-600 ">
+                                                   {address}
+                                                </span>
+                                                 :  <button onClick={connect}type="button" className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500" id="options-menu">
                                                  Connect</button>
                                                 }
                                     </div>
