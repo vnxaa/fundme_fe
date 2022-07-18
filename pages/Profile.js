@@ -85,9 +85,8 @@ export default function Profile() {
             .catch((err) => {
               console.log(err.response.data);
             });
-            
-           
     }
+
     useEffect(()=> {
         connect()
       }, [])
@@ -98,15 +97,13 @@ export default function Profile() {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = await provider.getSigner()
         const signerAddress= await signer.getAddress();
-        login(signerAddress);
+        await login(signerAddress);
         console.log(signerAddress)
         setAddress(signerAddress);
     }
 
   return (
     <div>
-      
-        
           <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 shadow-lg px-5 py-4 text-gray-800 dark:text-gray-50" style={{marginTop: 100}}>
         <div className="w-full pt-1 text-center -mt-16 mx-auto">
             <a  className="block relative">
@@ -135,8 +132,6 @@ export default function Profile() {
                 
             </div>
          </div> 
-        
-
         {
           isUpdate ?   <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 shadow-lg px-5 py-4 text-gray-800 dark:text-gray-50" style={{marginTop: 2}}>
            <div className='flex'>
@@ -149,8 +144,6 @@ export default function Profile() {
         </div> : <div></div>
         }
       
-    </div>
-     
-        
+    </div>  
   )
 }

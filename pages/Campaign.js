@@ -7,10 +7,11 @@ import { ethers } from 'ethers'
 import {storage} from '../config/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid";
-
+import { Router, useRouter } from 'next/router';
 
 
 export default function Campaign() {
+  const router = useRouter();
 
   const [isLogin, setLogin] = useState(false)
 
@@ -22,6 +23,7 @@ export default function Campaign() {
   const [whitepaper, setWhitepaper] = useState("");
   const [website, setWebsite] = useState("");
   const [date, setDate] = useState("");
+  const [campaignId, setCampaignId] = useState("");
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -79,7 +81,11 @@ export default function Campaign() {
     });
     promise
       .then((result) => {
-        console.log(result.data);
+       
+        const id = result.data.campaign._id
+        // console.log(result.data.campaign._id);
+
+        router.push('./campaignId/'+ id);
       })
       .catch((err) => {
         console.log(err.response.data);
