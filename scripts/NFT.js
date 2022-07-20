@@ -5,18 +5,11 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const fs = require('fs')
 
 async function main() {
-  const Donate = await hre.ethers.getContractFactory("Donate");
-  const donate = await Donate.deploy();
-  await donate.deployed();
-
-  let config = `
-  export const donateAddress = ${donate.address}`
-
-  let data = JSON.stringify(config)
-  fs.writeFileSync('config.js', JSON.parse(data))
+  const Nft = await hre.ethers.getContractFactory("NFT");
+  const nft = await Nft.deploy();
+  await nft.deployed();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

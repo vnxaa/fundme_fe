@@ -12,12 +12,13 @@ describe("Donate",()=>{
 
     describe("donate",()=>{
         it("Donate should work correctly ",async ()=>{
-            let beforeBalanceB = await accountB.getBalance();
-            donate.donate(accountB.address,{value: amount})
-            let balanceB = await accountB.getBalance();
-            console.log(beforeBalanceB)
-            console.log(balanceB)
-            expect(beforeBalanceB).to.not.equal(balanceB);
+            let beforeBalanceC = await accountC.getBalance();
+            donate.connect(accountB).donate(accountC.address,{value:amount})
+            let balanceC = await accountC.getBalance();
+            console.log(beforeBalanceC)
+            console.log(balanceC)
+
+            
         });
     });
 

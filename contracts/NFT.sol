@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
@@ -9,11 +10,7 @@ contract NFT is ERC721URIStorage{
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    address contractAddress;
-
-    constructor(address marketplaceAddress) ERC721('FundMe', 'FM') {
-        contractAddress = marketplaceAddress;
-    }
+    constructor() ERC721('FundMe', 'FM') {}
 
     function mintToken(string memory tokenURI) public returns(uint) {
         _tokenIds.increment();
@@ -21,7 +18,7 @@ contract NFT is ERC721URIStorage{
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, tokenURI);
         // give the marketplace the approval to transact between users
-        setApprovalForAll(contractAddress, true);
+        setApprovalForAll(address(this), true);
         return newItemId;
     }
 
