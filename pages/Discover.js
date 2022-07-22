@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Campaign from './components/campaign'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import NFT from './components/nft';
 export default function Discover() {

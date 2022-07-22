@@ -7,6 +7,8 @@ import Axios from "axios";
 const Web3 = require("web3");
 import Countdown from '../components/coutdown';
 import History from '../components/history';
+import Reward from "../components/reward";
+import { Carousel } from "react-responsive-carousel";
 
 export default function campaignid() {
   const [address, setAddress] = useState([]);
@@ -20,7 +22,8 @@ export default function campaignid() {
   const [donates, setDonate] = useState();
   const [allhistory, setAllhistory] = useState([]);
   const [fund, setFund] = useState();
-  const [enddate, setEnddate] = useState()
+  const [enddate, setEnddate] = useState();
+  const [rewards, setAllRewards] = useState([]);
   const router = useRouter();
   const ref = useRef(null);
   const id = router.query.id;
@@ -133,16 +136,30 @@ export default function campaignid() {
           data.fund.map((his) => (
             sum += Number(his.amount)
           ))
-          // console.log(sum);
           setFund(sum);
         },
         (error) => {
           console.log(error)
         });
   }
+
+  const getAllRewards = async () => {
+    fetch('http://localhost:5000/api/rewards/' + id)
+      .then((res) => res.json())
+      .then(
+        (data) => {
+          console.log("rewards: ", data.reward)
+          setAllRewards(data.reward);
+        },
+        (error) => {
+          console.log(error)
+        });
+  }
+
   async function loadPage() {
     await getContentById();
     await getAllHistory();
+    await getAllRewards();
   }
 
   return (
@@ -155,7 +172,7 @@ export default function campaignid() {
           ></div>
         </div>
         <div className="text-2xl text-white text-right mx-8">
-        Target: {fund}/{target} ETH
+          Target: {fund}/{target} ETH
         </div>
         <div className="text-center mb-5">
           {address == author ? (
@@ -214,7 +231,7 @@ export default function campaignid() {
             <h1 className="font-light w-full uppercase text-center text-4xl sm:text-5xl dark:text-white text-gray-800">
               {title}
             </h1>
- 
+
             <div className='flex text-gray-800  text-black justify-center'>
               <Countdown
                 deadline={enddate}
@@ -253,34 +270,16 @@ export default function campaignid() {
         </div>
         <ul className="flex flex-col">
           <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
-              <div className="flex-row gap-4 flex justify-center items-center">
-                <div className="flex-shrink-0">
-                  <a href="#" className="block relative">
-                    <img
-                      alt="profil"
-                      src="https://firebasestorage.googleapis.com/v0/b/fundme-68982.appspot.com/o/images%2Fbored-ape-nft-accidental-0-728-5490-8163-1646708401.jpg5ce7562f-82d0-4962-b2a0-b40ebc34f04d?alt=media&token=bbc270e0-d3d5-4933-a6fa-7ecd948fd263"
-                      className="mx-auto object-cover object-center rounded-full h-20 w-20 "
-                    />
-                  </a>
+            <div lassName="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
 
-                  <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
-                    <div className="w-2/3 h-full text-center text-xs text-white bg-indigo-500 rounded-full">
-                      60%
-                    </div>
+              <Carousel infiniteLoop='true' stopOnHover='true' width="20rem" height="10rem" showStatus="false" showIndicators="false" showThumbs="false">
+                {rewards.map((reward) => (
+                  <div>
+                    <Reward nfts={reward.nfts} amount={reward.amount} address={address} id={id} target={reward.target}/>
                   </div>
-                </div>
-                <div className=" flex flex-col">
-    
-                </div>
-                <p className="absolute top-3 right-4 text-indigo-500 text-ms">100</p>
-                <button
-                  type="button"
-                  className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                >
-                  Claim
-                </button>
-              </div>
+                ))}
+              </Carousel>
+
             </div>
           </li>
         </ul>

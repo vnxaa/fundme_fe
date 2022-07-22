@@ -11,3 +11,10 @@ GAS_REPORT=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js
 ```
+npm install
+npx hardhat node 
+npx hardhat run scripts/deploy.js --network hardhat
+npx hardhat run scripts/NFT.js --network hardhat
+npm i react-responsive-carousel
+npm i web3
+npm run dev
