@@ -30,7 +30,6 @@ export default function Campaign() {
     }
   }
   async function login(address) {
-
     let promise = Axios({
       url: "http://localhost:5000/api/auth/login",
       method: "POST",

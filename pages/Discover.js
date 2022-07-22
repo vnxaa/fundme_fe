@@ -10,7 +10,6 @@ export default function Discover() {
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log('132');
           console.log(data);
           setCampaigns(data);
           console.log(campaigns);
