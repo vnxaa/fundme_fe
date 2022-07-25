@@ -5,10 +5,17 @@ import {useEffect, useState} from 'react'
 import Web3Modal from 'web3modal'
 import {ethers} from 'ethers'
 
+
+
 import {storage} from '../config/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 // import{ref,uploadBytes} from 'firebase/firestore'
 import { v4 } from "uuid";
+
+
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
+import GET_OWN_NFTS from "./state/useOwnNFT"
 
 export default function Profile() {
     const [address, setAddress] = useState([])
@@ -27,15 +34,9 @@ export default function Profile() {
         }
     }
     
-    // const uploadFile= async ()=>{
-    //     if(image==null)return;
-    //     const imageRef = ref(storage, `images/${image.name + v4()}`);
-    //     await uploadBytes(imageRef, image);
-    //     const urls =  await getDownloadURL(imageRef);
-    //     console.log(urls)
-    //     setUrl(urls)
-    //     console.log(url)
-    // }
+    const  {data}  = useQuery(GET_OWN_NFTS,{variables: {owner: address}})
+    const listOwnNfts = data?.nfts
+    console.log(listOwnNfts)
 
     const update= async(username)=>{
         if(image==null)return;

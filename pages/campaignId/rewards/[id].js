@@ -107,7 +107,7 @@ export default function rewards() {
 
           <div className="relative flex justify-center text-sm leading-5">
             <span className="px-2 text-gray-500 bg-white">
-              Add Pool Rewards
+              Add Rewards
             </span>
           </div>
         </div>

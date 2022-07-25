@@ -115,7 +115,7 @@ export default function campaignid() {
         value: web3.utils.toWei(donates, "ether"),
       })
       .then(() => {
-        saveFund(author, id, donates);
+        saveFund(signerAddress, id, donates);
       })
       .catch(() => console.log("user reject"));
   }
@@ -181,7 +181,7 @@ export default function campaignid() {
               type="button"
               className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-auto transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
-              Add Pool Rewards
+              Add Rewards
             </button>
           ) : (
             <div>
@@ -270,7 +270,7 @@ export default function campaignid() {
         </div>
         <ul className="flex flex-col">
           <li className="border-gray-400 flex flex-row mb-2">
-            <div lassName="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
+            <div className="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
 
               <Carousel infiniteLoop='true' stopOnHover='true' width="20rem" height="10rem" showStatus="false" showIndicators="false" showThumbs="false">
                 {rewards.map((reward) => (

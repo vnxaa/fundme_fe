@@ -8,12 +8,12 @@ const hre = require("hardhat");
 const fs = require('fs')
 
 async function main() {
-  const Donate = await hre.ethers.getContractFactory("Donate");
-  const donate = await Donate.deploy();
-  await donate.deployed();
-
+  const Fundme = await hre.ethers.getContractFactory("Fundme");
+  const fundme = await Fundme.deploy();
+  await fundme.deployed();
+  console.log("deploy to ", fundme.address)
   let config = `
-  export const donateAddress = ${donate.address}`
+  export const nftAddress = ${fundme.address}`
 
   let data = JSON.stringify(config)
   fs.writeFileSync('config.js', JSON.parse(data))

@@ -14,11 +14,11 @@ describe("NFT",()=>{
         it("nft should work correctly ",async ()=>{
             console.log(accountB.address)
             const uri = 'https://fb.com/'
-            const trans = await nft.connect(accountB).mintToken(uri)
+            const trans = await nft.mintToken(uri)
             const receipt = await trans.wait();
-            const tokenID = receipt.events[0].args.tokenId;
-            const ownerAddress = await nft.ownerOf(tokenID);
-            console.log(ownerAddress);
+            const event = receipt.events[0].args
+            // const ownerAddress = await nft.ownerOf(tokenID);
+            console.log(receipt);
         });
     });
 

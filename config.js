@@ -1,2 +1,2 @@
 
-  export const donateAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  export const nftAddress = "0xe19dC3a307De1758D7127774390DE10ee7523872"
