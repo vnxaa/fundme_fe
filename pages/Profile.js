@@ -91,7 +91,6 @@ export default function Profile() {
         setUser(user)
         setAvatar(avatar)
         setUserId(id)
-        setLogin(true)
         console.log(id);
       })
       .catch((err) => {
@@ -130,7 +129,7 @@ export default function Profile() {
 
   return (
     <div>
-      <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 shadow-lg px-5 py-4 text-gray-800 dark:text-gray-50" style={{ marginTop: 100 }}>
+      <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-200 border-2 px-5 py-4 text-gray-800 dark:text-gray-50" style={{ marginTop: 100 }}>
         <div className="w-full pt-1 text-center -mt-16 mx-auto">
           <a className="block relative">
             <img alt="avatar" src={avatar} className="mx-auto object-cover rounded-full h-20 w-20 " />
@@ -152,14 +151,14 @@ export default function Profile() {
           </div>
           <button onClick={() => {
             setUpdate(true)
-          }} type="button" className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+          }} type="button" className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold  focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
             Update
           </button>
 
         </div>
       </div>
       {
-        isUpdate ? <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 shadow-lg px-5 py-4 text-gray-800 dark:text-gray-50" style={{ marginTop: 2 }}>
+        isUpdate ? <div className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-200 border-2 px-5 py-4 text-gray-800 dark:text-gray-50" style={{ marginTop: 2 }}>
           <div className='flex'>
             <input className="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" onChange={e => setUsername(e.target.value)} placeholder="Username" />
             <input className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" type="file" onChange={handleChange} />
@@ -175,15 +174,15 @@ export default function Profile() {
           <TabContext value={value}>
             <Box className='flex justify-center' sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <TabList onChange={handleTab} aria-label="lab API tabs example">
-                <Tab label="CAMPAIGN" value="1" />
-                <Tab label="COLLECTION" value="2" />
+                <Tab label="CAMPAIGN" value="2" />
+                <Tab label="COLLECTION" value="1" />
                 <Tab label="LISTING" value="3" />
               </TabList>
             </Box>
-            <TabPanel value="1">
-              <div>campaign</div>
-            </TabPanel>
             <TabPanel value="2">
+              <div>CAMPAIGN</div>
+            </TabPanel>
+            <TabPanel value="1">
               <div>
                 {
                   loading ? <div>loading...</div> : <div>
@@ -191,7 +190,7 @@ export default function Profile() {
                       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         {ownedNFTs.map((nft) => (
                           <Grid item xs={2} sm={4} md={4}>
-                            <Item className='border-solid border-gray-200 border-2'>
+                            <Item className='border-solid border-gray-100 border-2'>
                               <NFT id={nft.id} uri={nft.tokenURI} button="Sell" />
                             </Item>
                           </Grid>
@@ -202,7 +201,7 @@ export default function Profile() {
                 }
               </div>
             </TabPanel>
-            <TabPanel value="3">Item Three</TabPanel>
+            <TabPanel value="3">LISTING</TabPanel>
           </TabContext>
         </Box>
       </div>

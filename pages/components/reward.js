@@ -1,47 +1,20 @@
 import { useEffect, useState } from "react";
-import Web3Modal from 'web3modal'
-import { Contract,ethers } from 'ethers'
-import Fundme from '../../artifacts/contracts/Fundme.sol/Fundme.json'
-import { nftAddress } from '../../config'
-const Web3 = require('web3');
+import Web3Modal from "web3modal";
+import { Contract, ethers } from "ethers";
+import Fundme from "../../artifacts/contracts/Fundme.sol/Fundme.json";
+import { nftAddress } from "../../config";
+const Web3 = require("web3");
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import GET_OWN_NFTS from "../state/useOwnNFT"
+import GET_OWN_NFTS from "../state/useOwnNFT";
+import useOwnNFT from "../state/useOwnNFT";
+import Axios from "axios";
 
 export default function Reward(props) {
   const [img, setImg] = useState();
   const [fund, setFund] = useState();
   const [claimm, setClaim] = useState(false);
 
-  // const { data, loading }  = useQuery(GET_OWN_NFTS,{variables: {owner: props.address}})
-
-  // const listRewardNFT=data?.nfts;
-  // const n = data?.nfts.length;
-  // let rewardId=[];
- 
-  // // let cpreward=[] = props.nfts
-
-  // for(let i = 0; i <n;i++){
-  //   rewardId.push(listRewardNFT[i].tokenURI.slice(31, 55));
-  //   // console.log(rewardId==rewardId[0])
-  // }
-  // // for(let i =0;i<props.nfts.length;i++){
-  // //   cpreward.push(listCpreward[i])
-    
-  // // }
-  // console.log(props.nfts)
- 
-  // const isClaim = () => {
-  //   for(let i =0 ;i <rewardId.length;i++){
-  //     if(rewardId[i]==props.nfts) {
-  //       console.log("123: ", rewardId[i], props.nfts)
-  //       setClaim(true);
-  //     } 
-      
-  //   }
-  //   // return false;
-  // }
- 
 
   const getNFT = async () => {
     fetch("http://localhost:5000/api/nfts/" + props.nfts)
@@ -78,29 +51,64 @@ export default function Reward(props) {
   useEffect(() => {
     getNFT();
     getFund();
-  
   }, []);
 
   console.log("claim: ", claimm);
 
-  async function claim() {
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
-    const contract = new Contract(nftAddress,Fundme.abi ,signer)
 
-    const uri = "http://localhost:5000/api/nfts/"+ props.nfts 
-    let transaction = await contract.mintToken(uri)
-    let receipt = await transaction.wait()
-    
-    
-    const tokenID = receipt.events[0].args.tokenId
-    // const ownerAddress = await contract.ownerOf(tokenID);
-    console.log(tokenID);
+  const mintReward = async (nfts) => {
+    let promise = Axios({
+      url: "http://localhost:5000/api/rewards/mint/" + nfts,
+      method: "PUT",
+    });
+    promise
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   }
 
-  // console.log("iscalaim: ", isClaim())
+  async function claim() {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = new Contract(nftAddress, Fundme.abi, signer);
+
+    const uri = "http://localhost:5000/api/nfts/" + props.nfts;
+    let transaction = await contract.mintToken(uri);
+    let receipt = await transaction.wait();
+
+    const tokenID = receipt.events[0].args.tokenId;
+    
+    if(tokenID){
+      await mintReward(props.nfts)
+      return
+    }
+    // const ownerAddress = await contract.ownerOf(tokenID);
+
+  }
+
+  // CHECK CLAIM
+  let isClaim = false;
+  let ownedNFTs = [];
+  let data = [];
+  data = useOwnNFT();
+  ownedNFTs = data.ownedNFTs;
+  console.log("ownnft: ", ownedNFTs);
+  console.log("rwnft: ", props.nfts);
+  const { loading } = useOwnNFT();
+  if (!loading) {
+    for (let i = 0; i < ownedNFTs.length; i++) {
+      console.log("i: ", ownedNFTs[i].tokenURI.slice(31));
+      if (ownedNFTs[i].tokenURI.slice(31) == props.nfts) {
+        isClaim = true;
+        console.log("CLAIM IN: ", isClaim);
+      }
+    }
+  }
 
   return (
     <div>
@@ -118,7 +126,8 @@ export default function Reward(props) {
             <div
               className="h-full text-center text-xs text-white bg-indigo-500 rounded-full"
               style={{
-                width: `${(Number(fund) / Number(props.target)) * 100}%`, maxWidth: 100
+                width: `${(Number(fund) / Number(props.target)) * 100}%`,
+                maxWidth: 100,
               }}
             >
               {fund}/{props.target}
@@ -130,7 +139,7 @@ export default function Reward(props) {
             Amount: {props.amount}
           </p>
         </div>
-        {fund >= props.target  ? (
+        {fund >= props.target && !isClaim ? (
           <button
             onClick={claim}
             type="button"

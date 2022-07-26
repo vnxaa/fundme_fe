@@ -28,7 +28,9 @@ export default function NFT(props) {
   useEffect(() => {
     getIdCampaign()
   }, [])
-
+  const sellNFT = async ()=>{
+    console.log("sell")
+  }
   return (
     <div class="w-full flex justify-center items-center">
       <div class="w-full p-4">
@@ -46,7 +48,7 @@ export default function NFT(props) {
           </div>
           <div>
             <div class="flex md:flex-row justify-center items-center text-gray-900 pt-3">
-              <button class="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">
+              <button onClick={sellNFT} class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg ">
                 {props.button}
               </button>
             </div>

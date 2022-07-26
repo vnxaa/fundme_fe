@@ -24,7 +24,7 @@ export default function Discover() {
       <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-extrabold leading-9 text-white sm:text-4xl sm:leading-10">
-            Bring your campaign to file.
+            Bring your campaign to life.
           </h2>
           <p className="mt-3 text-base leading-7 sm:mt-4 text-white uppercase">
             on fundme:
@@ -59,8 +59,9 @@ export default function Discover() {
       </section>
       {/* top campaign */}
       <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
+        
         <div className="bg-slate-900 dark:bg-gray-800 ">
-          <div className="lg:flex lg:items-center lg:justify-between w-full mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 z-20">
+          <div className="container justify-between mx-auto px-6 flex relative py-16">
             <h2 className="text-3xl font-extrabold text-black dark:text-white sm:text-4xl">
               <span className="block" style={{color:'white'}}>
                 Top Campaign
@@ -68,13 +69,14 @@ export default function Discover() {
             </h2>
             <div className="lg:mt-0 lg:flex-shrink-0">
               <div className="ml-3 inline-flex rounded-md shadow">
-                <button type="button" className="py-4 px-6  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                <button type="button" className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                   View all
                 </button>
               </div>
             </div>
           </div>
         </div>
+        
         <Carousel infiniteLoop='true' autoPlay='true' stopOnHover='true'>
           {campaigns.map((campaign) => (
             <div>
@@ -86,7 +88,7 @@ export default function Discover() {
       {/* nfts */}
       <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="bg-slate-900 dark:bg-gray-800 ">
-          <div className="lg:flex lg:items-center lg:justify-between w-full mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 z-20">
+          <div className="container justify-between mx-auto px-6 flex relative py-16">
             <h2 className="text-3xl font-extrabold text-black dark:text-white sm:text-4xl">
               <span className="block" style={{color:'white'}}>
                 NFTs
@@ -94,7 +96,7 @@ export default function Discover() {
             </h2>
             <div className="lg:mt-0 lg:flex-shrink-0">
               <div className="ml-3 inline-flex rounded-md shadow">
-                <button type="button" className="py-4 px-6  bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                <button type="button" className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                   View all
                 </button>
               </div>
@@ -102,7 +104,7 @@ export default function Discover() {
           </div>
         </div>
         <div>
-          <NFT />
+          {/* <NFT /> */}
         </div>
         {/* <Carousel infiniteLoop='true'>
           <div>

@@ -33,8 +33,8 @@ module.exports = {
       chainId: 31337
     },
     rinkeby: {
-      url: process.env.RINKEBY_URL.toString(),
-      accounts: [process.env.RINKEBY_PRIVATEKEY_ACCOUNT.toString()],
+      url: process.env.RINKEBY_URL,
+      accounts: [process.env.RINKEBY_PRIVATEKEY_ACCOUNT],
     },
   }
 };
