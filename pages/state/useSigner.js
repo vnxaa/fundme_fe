@@ -1,42 +1,49 @@
-import React from 'react'
-import {useEffect, useState} from 'react'
-import Web3Modal from 'web3modal'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
 import {ethers} from 'ethers'
-import Axios from "axios";
+import Web3Modal from "web3modal";
 
-export default function useSigner() {
-    const [address, setAddress] = useState([])
+const SignerContext = createContext();
+const useSigner = () => useContext(SignerContext);
 
-    async function login(address){
-        let promise = Axios({
-            url: "http://localhost:5000/api/auth/login",
-            method: "POST",
-            data: {address: address}
-          });
-          promise
-            .then((result) => {
-              console.log(result.data.user.address); 
-            
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+
+
+export  function SignerProvider(props) {
+  const [signer, setSigner] = useState();
+  const [address, setAddress] = useState();
+
+  const connectWallet = async () => {
+    try {
+      const web3Modal = new Web3Modal()
+      const connection = await web3Modal.connect()
+      const provider = new ethers.providers.Web3Provider(connection)
+      const signer = await provider.getSigner()
+      const signerAddress= await signer.getAddress();
+
+      setSigner(signer);
+      setAddress(signerAddress);
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-    useEffect(()=> {
-        connect()
-      }, [])
-    
-    async function connect(){
-        const web3Modal = new Web3Modal()
-        const connection = await web3Modal.connect()
-        const provider = new ethers.providers.Web3Provider(connection)
-        const signer = await provider.getSigner()
-        const signerAddress= await signer.getAddress();
-        await login(signerAddress);
-        console.log(signerAddress)
-        setAddress(signerAddress);
-    }
+  useEffect(() => {
+    connectWallet();
+    if (Web3Modal.cachedProvider) connectWallet();
+    window.ethereum.on("accountsChanged", connectWallet);
+  }, []);
 
-    return address
+  const contextValue = { signer, address, connectWallet };
+  return (
+    <SignerContext.Provider value={contextValue}>
+      {props.children}
+    </SignerContext.Provider>
+  )
 }
+
+export default useSigner;

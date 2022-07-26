@@ -15,7 +15,7 @@ import { v4 } from "uuid";
 
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import GET_OWN_NFTS from "./state/useOwnNFT"
+// import GET_OWN_NFTS from "./state/useOwnNFT"
 
 export default function Profile() {
     const [address, setAddress] = useState([])
@@ -26,7 +26,7 @@ export default function Profile() {
     const [userId,setUserId] = useState(null)
     const [user,setUser] = useState()
     const [avatar,setAvatar] = useState()
-
+    const [nfts,setNfts] = useState([])
 
     const handleChange=(e)=>{
         if (e.target.files[0]) {
@@ -34,10 +34,19 @@ export default function Profile() {
         }
     }
     
-    const  {data}  = useQuery(GET_OWN_NFTS,{variables: {owner: address}})
-    const listOwnNfts = data?.nfts
-    console.log(listOwnNfts)
+    // const { data, loading }  = useQuery(GET_OWN_NFTS,{variables: {owner: address}})
+    // console.log(data)
 
+    const getNFT=()=>{
+      let listOwnNfts;
+      if(!loading){
+        listOwnNfts = data?.nfts
+        console.log(listOwnNfts)
+       
+      }
+   
+    }
+   
     const update= async(username)=>{
         if(image==null)return;
         const imageRef = ref(storage, `images/${image.name + v4()}`);

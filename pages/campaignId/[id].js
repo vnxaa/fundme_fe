@@ -9,9 +9,9 @@ import Countdown from '../components/coutdown';
 import History from '../components/history';
 import Reward from "../components/reward";
 import { Carousel } from "react-responsive-carousel";
-
+import useSigner from "../state/useSigner"
 export default function campaignid() {
-  const [address, setAddress] = useState([]);
+  const {signer, address } = useSigner();
   const [content, setContent] = useState();
   const [image, setImage] = useState();
   const [title, setTitle] = useState();
@@ -29,7 +29,6 @@ export default function campaignid() {
   const id = router.query.id;
 
   useEffect(() => {
-    connect();
     setTimeout(() => {
       ref.current.click();
     }, 100); //miliseconds
@@ -57,20 +56,7 @@ export default function campaignid() {
       });
   }
 
-  async function login(address) {
-    let promise = Axios({
-      url: "http://localhost:5000/api/auth/login",
-      method: "POST",
-      data: { address: address },
-    });
-    promise
-      .then((result) => {
-        console.log(result.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  }
+
 
   async function saveFund(sponsor, belongToCampaign, amount) {
     let promise = Axios({
@@ -90,15 +76,7 @@ export default function campaignid() {
         console.log(err.response.data);
       });
   }
-  async function connect() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = await provider.getSigner();
-    const signerAddress = await signer.getAddress();
-    login(signerAddress);
-    setAddress(signerAddress);
-  }
+
 
   async function donate() {
     var web3 = new Web3(Web3.givenProvider);

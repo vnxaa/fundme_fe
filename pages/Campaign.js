@@ -8,13 +8,13 @@ import {storage} from '../config/firebase';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid";
 import { Router, useRouter } from 'next/router';
+import useSigner from "./state/useSigner"
 
 export default function Campaign() {
   const router = useRouter();
 
-  const [isLogin, setLogin] = useState(false)
 
-  const [address, setAddress] = useState("");
+  const {signer, address } = useSigner();
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [content, setContent] = useState("");
@@ -29,36 +29,7 @@ export default function Campaign() {
       setImage(e.target.files[0]);
     }
   }
-  async function login(address) {
-    let promise = Axios({
-      url: "http://localhost:5000/api/auth/login",
-      method: "POST",
-      data: { address: address }
-    });
-    promise
-      .then((result) => {
-        console.log(result.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-    setLogin(true)
-  }
-
-  useEffect(() => {
-    connect()
-  }, [])
-
-  async function connect() {
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = await provider.getSigner()
-    const signerAddress = await signer.getAddress();
-    login(signerAddress);
-    console.log(signerAddress)
-    setAddress(signerAddress);
-  }
+ 
 
   const createCampaign = async () => {
     if (image == null) return;

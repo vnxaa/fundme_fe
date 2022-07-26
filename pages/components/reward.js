@@ -4,10 +4,44 @@ import { Contract,ethers } from 'ethers'
 import Fundme from '../../artifacts/contracts/Fundme.sol/Fundme.json'
 import { nftAddress } from '../../config'
 const Web3 = require('web3');
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
+import GET_OWN_NFTS from "../state/useOwnNFT"
 
 export default function Reward(props) {
   const [img, setImg] = useState();
   const [fund, setFund] = useState();
+  const [claimm, setClaim] = useState(false);
+
+  // const { data, loading }  = useQuery(GET_OWN_NFTS,{variables: {owner: props.address}})
+
+  // const listRewardNFT=data?.nfts;
+  // const n = data?.nfts.length;
+  // let rewardId=[];
+ 
+  // // let cpreward=[] = props.nfts
+
+  // for(let i = 0; i <n;i++){
+  //   rewardId.push(listRewardNFT[i].tokenURI.slice(31, 55));
+  //   // console.log(rewardId==rewardId[0])
+  // }
+  // // for(let i =0;i<props.nfts.length;i++){
+  // //   cpreward.push(listCpreward[i])
+    
+  // // }
+  // console.log(props.nfts)
+ 
+  // const isClaim = () => {
+  //   for(let i =0 ;i <rewardId.length;i++){
+  //     if(rewardId[i]==props.nfts) {
+  //       console.log("123: ", rewardId[i], props.nfts)
+  //       setClaim(true);
+  //     } 
+      
+  //   }
+  //   // return false;
+  // }
+ 
 
   const getNFT = async () => {
     fetch("http://localhost:5000/api/nfts/" + props.nfts)
@@ -44,7 +78,10 @@ export default function Reward(props) {
   useEffect(() => {
     getNFT();
     getFund();
+  
   }, []);
+
+  console.log("claim: ", claimm);
 
   async function claim() {
     const web3Modal = new Web3Modal()
@@ -55,14 +92,15 @@ export default function Reward(props) {
 
     const uri = "http://localhost:5000/api/nfts/"+ props.nfts 
     let transaction = await contract.mintToken(uri)
-    let tx = await transaction.wait()
-    const event = tx.events[0].args
- 
+    let receipt = await transaction.wait()
     
-    // const tokenID = receipt.events[0].args.tokenId
+    
+    const tokenID = receipt.events[0].args.tokenId
     // const ownerAddress = await contract.ownerOf(tokenID);
-    console.log(event);
+    console.log(tokenID);
   }
+
+  // console.log("iscalaim: ", isClaim())
 
   return (
     <div>
@@ -92,7 +130,7 @@ export default function Reward(props) {
             Amount: {props.amount}
           </p>
         </div>
-        {fund >= props.target ? (
+        {fund >= props.target  ? (
           <button
             onClick={claim}
             type="button"

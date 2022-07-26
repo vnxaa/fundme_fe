@@ -7,45 +7,19 @@ import Axios from "axios";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import { v4 } from "uuid";
 import {storage} from '../../../config/firebase';
-
+import useSigner from "../../state/useSigner"
 
 export default function rewards() {
-    const [address, setAddress] = useState([])
+ 
+
+    const {signer, address } = useSigner();
     const router = useRouter();
     const [image, setImage] = useState(null);
     const [amount , setAmount ] = useState()
     const [target , setTarget ] = useState()
     const id = router.query.id;
 
-    async function login(address) {
-        let promise = Axios({
-          url: "http://localhost:5000/api/auth/login",
-          method: "POST",
-          data: { address: address }
-        });
-        promise
-          .then((result) => {
-            console.log(result.data);
-          })
-          .catch((err) => {
-            console.log(err.response.data);
-          });
-      }
-    
-      useEffect(() => {
-        connect()
-      }, [])
-    
-      async function connect() {
-        const web3Modal = new Web3Modal()
-        const connection = await web3Modal.connect()
-        const provider = new ethers.providers.Web3Provider(connection)
-        const signer = await provider.getSigner()
-        const signerAddress = await signer.getAddress();
-        login(signerAddress);
-        console.log(signerAddress)
-        setAddress(signerAddress);
-      }
+
       const handleChange = (e) => {
         if (e.target.files[0]) {
           setImage(e.target.files[0]);
@@ -65,6 +39,7 @@ export default function rewards() {
           promise
             .then((result) => {
                 console.log(result)
+                router.push('../'+ id);
             })
             .catch((err) => {
               console.log(err.response.data);
