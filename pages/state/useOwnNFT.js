@@ -19,7 +19,7 @@ const useOwnNFT =  ()=>{
   const  {data,loading}  = useQuery(GET_OWN_NFTS,{variables: {owner: address}})
   const ownedNFTs = data?.nfts;
 
-  return {ownedNFTs};
+  return {ownedNFTs,loading};
 }
 
 export default useOwnNFT;
