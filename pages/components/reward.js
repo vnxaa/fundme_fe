@@ -15,13 +15,11 @@ export default function Reward(props) {
   const [fund, setFund] = useState();
   const [claimm, setClaim] = useState(false);
 
-
   const getNFT = async () => {
     fetch("http://localhost:5000/api/nfts/" + props.nfts)
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log("image: ", data.nft.image);
           setImg(data.nft.image);
         },
         (error) => {
@@ -37,14 +35,11 @@ export default function Reward(props) {
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log("personal fund ", data.fund);
           let sum = 0;
           data.fund.map((perfund) => (sum += Number(perfund.amount)));
           setFund(sum);
         },
-        (error) => {
-          console.log(error);
-        }
+        (error) => {}
       );
   };
 
@@ -53,22 +48,13 @@ export default function Reward(props) {
     getFund();
   }, []);
 
-  console.log("claim: ", claimm);
-
-
   const mintReward = async (nfts) => {
     let promise = Axios({
       url: "http://localhost:5000/api/rewards/mint/" + nfts,
       method: "PUT",
     });
-    promise
-      .then((result) => {
-        console.log(result.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  }
+    promise.then((result) => {}).catch((err) => {});
+  };
 
   async function claim() {
     const web3Modal = new Web3Modal();
@@ -82,13 +68,12 @@ export default function Reward(props) {
     let receipt = await transaction.wait();
 
     const tokenID = receipt.events[0].args.tokenId;
-    
-    if(tokenID){
-      await mintReward(props.nfts)
-      return
+
+    if (tokenID) {
+      await mintReward(props.nfts);
+      return;
     }
     // const ownerAddress = await contract.ownerOf(tokenID);
-
   }
 
   // CHECK CLAIM
@@ -97,15 +82,12 @@ export default function Reward(props) {
   let data = [];
   data = useOwnNFT();
   ownedNFTs = data.ownedNFTs;
-  console.log("ownnft: ", ownedNFTs);
-  console.log("rwnft: ", props.nfts);
+
   const { loading } = useOwnNFT();
   if (!loading) {
     for (let i = 0; i < ownedNFTs.length; i++) {
-      console.log("i: ", ownedNFTs[i].tokenURI.slice(31));
       if (ownedNFTs[i].tokenURI.slice(31) == props.nfts) {
         isClaim = true;
-        console.log("CLAIM IN: ", isClaim);
       }
     }
   }
@@ -113,21 +95,18 @@ export default function Reward(props) {
   return (
     <div>
       <div className="flex-row gap-4 flex justify-center items-center p-14">
-        <div className="flex-shrink-0">
-          <a href="#" className="block relative">
-            <img
-              alt="profil"
-              src={img}
-              className="mx-auto object-cover  object-center h-20 w-20 "
-            />
-          </a>
+        <div className="flex-shrink-0 w-32">
+          <div
+            class="h-32 w-32 bg-contain bg-no-repeat bg-center"
+            style={{ backgroundImage: `url(${img})` }}
+          />
 
-          <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
+          <div className="w-full h-4 bg-gray-500 rounded-full mt-3">
             <div
-              className="h-full text-center text-xs text-white bg-indigo-500 rounded-full"
+              className="h-full text-center text-xs text-white bg-indigo-500 rounded-full text-black"
               style={{
                 width: `${(Number(fund) / Number(props.target)) * 100}%`,
-                maxWidth: 100,
+                maxWidth: "100%",
               }}
             >
               {fund}/{props.target}

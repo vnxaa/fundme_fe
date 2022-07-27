@@ -5,13 +5,13 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import Axios from "axios";
 const Web3 = require("web3");
-import Countdown from '../components/coutdown';
-import History from '../components/history';
+import Countdown from "../components/coutdown";
+import History from "../components/history";
 import Reward from "../components/reward";
 import { Carousel } from "react-responsive-carousel";
-import useSigner from "../state/useSigner"
+import useSigner from "../state/useSigner";
 export default function campaignid() {
-  const {signer, address } = useSigner();
+  const { signer, address } = useSigner();
   const [content, setContent] = useState();
   const [image, setImage] = useState();
   const [title, setTitle] = useState();
@@ -29,10 +29,14 @@ export default function campaignid() {
   const id = router.query.id;
 
   useEffect(() => {
-    setTimeout(() => {
-      ref.current.click();
-    }, 100); //miliseconds
-  }, []);
+    // setTimeout(() => {
+    //   ref.current.click();
+    // }, 100); //miliseconds
+
+    if(router.isReady){
+      loadPage();
+    }
+  }, [router.isReady]);
 
   async function getContentById() {
     let promise = Axios({
@@ -48,15 +52,12 @@ export default function campaignid() {
         setWhitepaper(result.data.whitepaper);
         setTarget(result.data.target);
         setAuthor(result.data.author);
-        setEnddate(result.data.endAt.substr(0, 10))
-        console.log(result.data);
+        setEnddate(result.data.endAt.substr(0, 10));
       })
       .catch((err) => {
         console.log(err.response);
       });
   }
-
-
 
   async function saveFund(sponsor, belongToCampaign, amount) {
     let promise = Axios({
@@ -69,14 +70,11 @@ export default function campaignid() {
       },
     });
     promise
-      .then((result) => {
-        console.log(result.data);
-      })
+      .then((result) => {})
       .catch((err) => {
         console.log(err.response.data);
       });
   }
-
 
   async function donate() {
     var web3 = new Web3(Web3.givenProvider);
@@ -99,40 +97,37 @@ export default function campaignid() {
   }
 
   async function addPool() {
-    console.log("add pool");
     router.push("../campaignId/rewards/" + id);
   }
   const getAllHistory = async () => {
-    fetch('http://localhost:5000/api/fund/' + id)
+    fetch("http://localhost:5000/api/fund/" + id)
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log("1 ", data.fund);
           setAllhistory(data.fund);
           let sum = 0;
-          console.log("all history: ", allhistory)
-          data.fund.map((his) => (
-            sum += Number(his.amount)
-          ))
+
+          data.fund.map((his) => (sum += Number(his.amount)));
           setFund(sum);
         },
         (error) => {
-          console.log(error)
-        });
-  }
+          console.log(error);
+        }
+      );
+  };
 
   const getAllRewards = async () => {
-    fetch('http://localhost:5000/api/rewards/' + id)
+    fetch("http://localhost:5000/api/rewards/" + id)
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log("rewards: ", data.reward)
           setAllRewards(data.reward);
         },
         (error) => {
-          console.log(error)
-        });
-  }
+          console.log(error);
+        }
+      );
+  };
 
   async function loadPage() {
     await getContentById();
@@ -146,7 +141,7 @@ export default function campaignid() {
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div
             className="bg-indigo-600 h-2.5 rounded-full"
-            style={{ width: `${(Number(fund) / Number(target) * 100)}%` }}
+            style={{ width: `${(Number(fund) / Number(target)) * 100}%` }}
           ></div>
         </div>
         <div className="text-2xl text-white text-right mx-8">
@@ -210,10 +205,8 @@ export default function campaignid() {
               {title}
             </h1>
 
-            <div className='flex text-gray-800  text-black justify-center'>
-              <Countdown
-                deadline={enddate}
-              />
+            <div className="flex text-gray-800  text-black justify-center">
+              <Countdown deadline={enddate} />
             </div>
             <div className="flex items-center justify-center mt-4">
               <a
@@ -249,21 +242,33 @@ export default function campaignid() {
         <ul className="flex flex-col">
           <li className="border-gray-400 flex flex-row mb-2">
             <div className="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
-
-              <Carousel infiniteLoop='true' stopOnHover='true' width="20rem" height="10rem" showStatus="false" showIndicators="false" showThumbs="false">
+              <Carousel
+                infiniteLoop="true"
+                stopOnHover="true"
+                width="20rem"
+                height="10rem"
+                showStatus="false"
+                showIndicators="false"
+                showThumbs="false"
+              >
                 {rewards.map((reward) => (
                   <div>
-                    <Reward nfts={reward.nfts} amount={reward.amount} address={address} id={id} target={reward.target}/>
+                    <Reward
+                      nfts={reward.nfts}
+                      amount={reward.amount}
+                      address={address}
+                      id={id}
+                      target={reward.target}
+                    />
                   </div>
                 ))}
               </Carousel>
-
             </div>
           </li>
         </ul>
       </div>
 
-      <div className="container flex flex-col mx-auto w-full items-center justify-center">
+      {/* <div className="container flex flex-col mx-auto w-full items-center justify-center">
         <div className="px-4 py-5 sm:px-6 w-full border dark:bg-gray-800 bg-white  mb-2 rounded-md">
           <h3 className="text-center text-lg leading-6 font-medium text-gray-900 dark:text-white">
             HISTORY
@@ -522,7 +527,7 @@ export default function campaignid() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

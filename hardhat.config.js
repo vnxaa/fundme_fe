@@ -31,10 +31,11 @@ module.exports = {
     },
     hardhat:{
       chainId: 31337
-    },
-    rinkeby: {
-      url: process.env.RINKEBY_URL,
-      accounts: [process.env.RINKEBY_PRIVATEKEY_ACCOUNT],
-    },
+    }
+    // ,
+    // rinkeby: {
+    //   url: process.env.RINKEBY_URL,
+    //   accounts: [process.env.RINKEBY_PRIVATEKEY_ACCOUNT],
+    // },
   }
 };

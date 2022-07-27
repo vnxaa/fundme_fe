@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import Profile from "../Profile";
-import Image from "next/image"
+import Image from "next/image";
 const logo = require("../../public/logo.png");
 export default function Header() {
   const [address, setAddress] = useState([]);
@@ -21,10 +21,7 @@ export default function Header() {
       data: { address: address },
     });
     promise
-      .then((result) => {
-        console.log(result.data);
-        // console.log(this.state.taskId);
-      })
+      .then((result) => {})
       .catch((err) => {
         console.log(err.response.data);
       });
@@ -39,7 +36,7 @@ export default function Header() {
       const signer = await provider.getSigner();
       const signerAddress = await signer.getAddress();
       login(signerAddress);
-      console.log(signerAddress);
+
       setAddress(signerAddress);
     } catch (error) {
       console.log(error);
@@ -53,7 +50,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <a className="flex-shrink-0" href="/Discover">
-                <Image  width="78" height="75" src={logo} alt="logo"/>
+                <Image width="78" height="75" src={logo} alt="logo" />
               </a>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
