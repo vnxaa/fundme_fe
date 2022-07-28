@@ -6,8 +6,8 @@ import UsePagination from "./components/usePagination";
 export default function Discover() {
 
   const [campaigns, setCampaigns] = useState([]);
-  const { marketSell, loading: loadingSell } = useMarketSell();
-  const list = marketSell.slice(0, 3);
+  const { marketSell: marketSell, loading: loadingSell } = useMarketSell();
+
   const getData = () => {
     fetch("http://localhost:5000/api/campaign/")
       .then((res) => res.json())
@@ -121,7 +121,7 @@ export default function Discover() {
               <div>loading...</div>
             ) : (
               <div>
-                <UsePagination obj={'market'} list={list} perpage={6} />
+                <UsePagination obj={'market'} list={marketSell.slice(0, 3)} perpage={6} />
               </div>
             )}
           </div>
