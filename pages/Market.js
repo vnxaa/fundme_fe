@@ -1,15 +1,11 @@
 
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
 import React from 'react'
 import UsePagination from "./components/usePagination";
 import useMarketSell from "./state/useMarketSell";
-import useSigner from "./state/useSigner"
 
 export default function Market() {
 
   const { marketSell, loading: loadingSell } = useMarketSell();
-
 
   return (
     <div>
@@ -18,7 +14,6 @@ export default function Market() {
           Let buy your own NFTs.
         </span>
       </h2>
-
       <div className="max-w-7xl mx-auto px-8">
         <div className="mt-10">
           {loadingSell ? (

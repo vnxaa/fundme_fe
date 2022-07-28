@@ -1,34 +1,26 @@
 import React from "react";
 import Axios from "axios";
-import Login from "./components/Login";
 import { useEffect, useState } from "react";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-// import{ref,uploadBytes} from 'firebase/firestore'
 import { v4 } from "uuid";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
-// import GET_OWN_NFTS from "./state/useOwnNFT"
 ///tabs
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-// import Campaign from './components/campaign';
-import NFT from "./components/nft";
 ///grid
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import useOwnNFT from "./state/useOwnNFT";
-import useMarketSell from "./state/useMarketSell";
-import MyCampaign from "./components/myCampaign";
 import UsePagination from "./components/usePagination";
 import useListedNFT from "./state/useListedNFT";
+
 export default function Profile() {
+  
   const [address, setAddress] = useState([]);
   const [isUpdate, setUpdate] = useState(false);
   const [image, setImage] = useState(null);
@@ -36,7 +28,6 @@ export default function Profile() {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState();
   const [avatar, setAvatar] = useState();
-
   const { ownedNFTs: ownedNFTs, loading: loadingOwne } = useOwnNFT();
   const { listedNFT: listedNFT, loading: loadinglistedNFT } = useListedNFT();
 
@@ -63,10 +54,12 @@ export default function Profile() {
         console.log(error);
       });
   };
+
   const updateProfile = async () => {
     await update(username);
     setUpdate(false);
   };
+
   async function login(address) {
     let id = null;
     let user = null;
@@ -87,9 +80,11 @@ export default function Profile() {
       })
       .catch((err) => { });
   }
+
   useEffect(() => {
     connect();
   }, []);
+
   async function connect() {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
@@ -101,11 +96,13 @@ export default function Profile() {
     setAddress(signerAddress);
     getData();
   }
+
   ///tab
   const [value, setValue] = React.useState("1");
   const handleTab = (event, newValue) => {
     setValue(newValue);
   };
+
   ///grid
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -114,6 +111,7 @@ export default function Profile() {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+
   ///load campaign
   const [campaigns, setCampaigns] = useState([]);
   const getData = () => {
@@ -124,6 +122,7 @@ export default function Profile() {
         setCampaigns(data);
       });
   };
+  
   return (
     <div>
       <div

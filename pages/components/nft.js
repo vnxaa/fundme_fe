@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import Web3Modal from "web3modal";
 import { Contract, ethers } from "ethers";
 import Fundme from "../../artifacts/contracts/Fundme.sol/Fundme.json";
-import { nftAddress } from "../../config";
-export default function NFT(props) {
-  const [cpId, setCpId] = useState();
+import { nftAddress } from "../../config";export default function NFT(props) {
+
   const [img, setImg] = useState();
   const [cpName, setCpname] = useState();
   const [price, setPrice] = useState();
@@ -13,7 +12,6 @@ export default function NFT(props) {
     fetch(props.uri)
       .then((res) => res.json())
       .then((data) => {
-        setCpId(data.nft.belongToCampaign);
         setImg(data.nft.image);
         fetch("http://localhost:5000/api/campaign/" + data.nft.belongToCampaign)
           .then((res) => res.json())
@@ -22,6 +20,7 @@ export default function NFT(props) {
           });
       });
   };
+
   useEffect(() => {
     getIdCampaign();
   }, []);
@@ -56,15 +55,14 @@ export default function NFT(props) {
     const cancelTransaction = await contract.cancelListing(props.id);
     console.log(cancelTransaction);
   };
+
   const buyNFT = async () => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const contract = new Contract(nftAddress, Fundme.abi, signer);
-    // const priceEther = ethers.utils.formatEther(props.price)
     const buyTransaction = await contract.buyNFT(props.id,{value: ethers.utils.parseEther(ethers.utils.formatEther(props.price))})
-
     console.log(buyTransaction);
   };
 

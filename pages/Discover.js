@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Campaign from "./components/campaign";
 import { Carousel } from "react-responsive-carousel";
-import NFT from "./components/nft";
+import useMarketSell from "./state/useMarketSell";
+import UsePagination from "./components/usePagination";
 export default function Discover() {
+
   const [campaigns, setCampaigns] = useState([]);
+  const { marketSell, loading: loadingSell } = useMarketSell();
+  const list = marketSell.slice(0, 3);
   const getData = () => {
     fetch("http://localhost:5000/api/campaign/")
       .then((res) => res.json())
@@ -11,9 +15,11 @@ export default function Discover() {
         setCampaigns(data);
       });
   };
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className="">
       {/* statictis  */}
@@ -74,7 +80,6 @@ export default function Discover() {
             </div>
           </div>
         </div>
-
         <Carousel infiniteLoop="true" autoPlay="true" stopOnHover="true">
           {campaigns.map((campaign) => (
             <div>
@@ -110,21 +115,17 @@ export default function Discover() {
             </div>
           </div>
         </div>
-        <div>{/* <NFT /> */}</div>
-        {/* <Carousel infiniteLoop='true'>
-          <div>
-            <Campaign />
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="mt-10">
+            {loadingSell ? (
+              <div>loading...</div>
+            ) : (
+              <div>
+                <UsePagination obj={'market'} list={list} perpage={6} />
+              </div>
+            )}
           </div>
-          <div>
-            <Campaign />
-          </div>
-          <div>
-            <Campaign />
-          </div>
-        </Carousel> */}
-         <h2 className="text-3xl text-center font-extrabold leading-9 text-white sm:text-4xl sm:leading-10">
-            Coming soon
-          </h2>
+        </div>
       </section>
     </div>
   );
