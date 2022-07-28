@@ -24,6 +24,7 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import useOwnNFT from "./state/useOwnNFT";
+import useMarketSell from "./state/useMarketSell";
 import MyCampaign from "./components/myCampaign";
 export default function Profile() {
   const [address, setAddress] = useState([]);
@@ -33,17 +34,22 @@ export default function Profile() {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState();
   const [avatar, setAvatar] = useState();
+
+  const { ownedNFTs, loading: loadingOwne } = useOwnNFT();
+  const { marketSell, loading: loadingSell  } = useMarketSell();
+
   let add = "";
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
-  let ownedNFTs = [];
-  let data = [];
-  data = useOwnNFT();
-  ownedNFTs = data.ownedNFTs;
-  const { loading } = useOwnNFT();
+
+  // let ownedNFTs = [];
+  // let data = [];
+  // data = useOwnNFT();
+  // ownedNFTs = data.ownedNFTs;
+
   const update = async (username) => {
     if (image == null) return;
     const imageRef = ref(storage, `images/${image.name + v4()}`);
@@ -236,7 +242,7 @@ export default function Profile() {
             </TabPanel>
             <TabPanel value="1">
               <div>
-                {loading ? (
+                {loadingOwne ? (
                   <div>loading...</div>
                 ) : (
                   <div>
@@ -252,6 +258,7 @@ export default function Profile() {
                               <NFT
                                 id={nft.id}
                                 uri={nft.tokenURI}
+                                isSell={false}
                                 button="Sell"
                               />
                             </Item>
@@ -263,7 +270,37 @@ export default function Profile() {
                 )}
               </div>
             </TabPanel>
-            <TabPanel value="3">LISTING</TabPanel>
+            <TabPanel value="3">
+              <div>
+                {loadingSell ? (
+                  <div>loading...</div>
+                ) : (
+                  <div>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid
+                        container
+                        spacing={{ xs: 2, md: 3 }}
+                        columns={{ xs: 4, sm: 8, md: 12 }}
+                      >
+                        {marketSell.map((nft) => (
+                          <Grid item xs={2} sm={4} md={4}>
+                            <Item className="border-solid border-gray-100 border-2">
+                              <NFT
+                                id={nft.id}
+                                uri={nft.tokenURI}
+                                isSell={true}
+                                price={nft.price}
+                                button="Cancel"
+                              />
+                            </Item>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+                  </div>
+                )}
+              </div>
+            </TabPanel>
           </TabContext>
         </Box>
       </div>
