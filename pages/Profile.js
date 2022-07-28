@@ -26,6 +26,7 @@ import Grid from "@mui/material/Grid";
 import useOwnNFT from "./state/useOwnNFT";
 import useMarketSell from "./state/useMarketSell";
 import MyCampaign from "./components/myCampaign";
+import UsePagination from "./components/usePagination";
 export default function Profile() {
   const [address, setAddress] = useState([]);
   const [isUpdate, setUpdate] = useState(false);
@@ -36,7 +37,7 @@ export default function Profile() {
   const [avatar, setAvatar] = useState();
 
   const { ownedNFTs, loading: loadingOwne } = useOwnNFT();
-  const { marketSell, loading: loadingSell  } = useMarketSell();
+  const { marketSell, loading: loadingSell } = useMarketSell();
 
   let add = "";
   const handleChange = (e) => {
@@ -61,7 +62,7 @@ export default function Profile() {
       data: { image: urls, username: username },
     });
     promise
-      .then((result) => {})
+      .then((result) => { })
       .catch((err) => {
         console.log(error);
       });
@@ -88,7 +89,7 @@ export default function Profile() {
         setAvatar(avatar);
         setUserId(id);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
   useEffect(() => {
     connect();
@@ -218,25 +219,7 @@ export default function Profile() {
             <TabPanel value="2">
               <div>
                 <div>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid
-                      container
-                      spacing={{ xs: 2, md: 3 }}
-                      columns={{ xs: 4, sm: 8, md: 12 }}
-                    >
-                      {campaigns.map((campaign) => (
-                        <Grid item xs={4} sm={4} md={6}>
-                          <Item className="border-solid border-gray-100 border-2">
-                            <MyCampaign
-                              title={campaign.title}
-                              image={campaign.image}
-                              id={campaign._id}
-                            />
-                          </Item>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Box>
+                  <UsePagination obj={''} list={campaigns} perpage={4}/>
                 </div>
               </div>
             </TabPanel>
@@ -246,26 +229,7 @@ export default function Profile() {
                   <div>loading...</div>
                 ) : (
                   <div>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Grid
-                        container
-                        spacing={{ xs: 2, md: 3 }}
-                        columns={{ xs: 4, sm: 8, md: 12 }}
-                      >
-                        {ownedNFTs.map((nft) => (
-                          <Grid item xs={2} sm={4} md={4}>
-                            <Item className="border-solid border-gray-100 border-2">
-                              <NFT
-                                id={nft.id}
-                                uri={nft.tokenURI}
-                                isSell={false}
-                                button="Sell"
-                              />
-                            </Item>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
+                    <UsePagination obj={'collecting'} list={ownedNFTs} perpage={6}/>
                   </div>
                 )}
               </div>
@@ -276,27 +240,7 @@ export default function Profile() {
                   <div>loading...</div>
                 ) : (
                   <div>
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Grid
-                        container
-                        spacing={{ xs: 2, md: 3 }}
-                        columns={{ xs: 4, sm: 8, md: 12 }}
-                      >
-                        {marketSell.map((nft) => (
-                          <Grid item xs={2} sm={4} md={4}>
-                            <Item className="border-solid border-gray-100 border-2">
-                              <NFT
-                                id={nft.id}
-                                uri={nft.tokenURI}
-                                isSell={true}
-                                price={nft.price}
-                                button="Cancel"
-                              />
-                            </Item>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
+                    <UsePagination obj={'listing'} list={marketSell} perpage={6}/>
                   </div>
                 )}
               </div>
