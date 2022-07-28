@@ -118,7 +118,7 @@ export default function Reward(props) {
             Amount: {props.amount}
           </p>
         </div>
-        {fund >= props.target && !isClaim ? (
+        {fund >= props.target && !isClaim && props.amount > 0 ? (
           <button
             onClick={claim}
             type="button"

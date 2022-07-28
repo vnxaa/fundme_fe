@@ -24,7 +24,7 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import useOwnNFT from "./state/useOwnNFT";
-
+import MyCampaign from "./components/myCampaign";
 export default function Profile() {
   const [address, setAddress] = useState([]);
   const [isUpdate, setUpdate] = useState(false);
@@ -33,21 +33,17 @@ export default function Profile() {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState();
   const [avatar, setAvatar] = useState();
-
+  let add = "";
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
-
   let ownedNFTs = [];
   let data = [];
   data = useOwnNFT();
-
   ownedNFTs = data.ownedNFTs;
-
   const { loading } = useOwnNFT();
-
   const update = async (username) => {
     if (image == null) return;
     const imageRef = ref(storage, `images/${image.name + v4()}`);
@@ -68,7 +64,6 @@ export default function Profile() {
     await update(username);
     setUpdate(false);
   };
-
   async function login(address) {
     let id = null;
     let user = null;
@@ -83,18 +78,15 @@ export default function Profile() {
         id = result.data.user._id;
         user = result.data.user.username;
         avatar = result.data.user.image;
-
         setUser(user);
         setAvatar(avatar);
         setUserId(id);
       })
       .catch((err) => {});
   }
-
   useEffect(() => {
     connect();
   }, []);
-
   async function connect() {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
@@ -102,10 +94,10 @@ export default function Profile() {
     const signer = await provider.getSigner();
     const signerAddress = await signer.getAddress();
     await login(signerAddress);
-
+    add = signerAddress;
     setAddress(signerAddress);
+    getData();
   }
-
   ///tab
   const [value, setValue] = React.useState("1");
   const handleTab = (event, newValue) => {
@@ -119,7 +111,16 @@ export default function Profile() {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
-
+  ///load campaign
+  const [campaigns, setCampaigns] = useState([]);
+  const getData = () => {
+    console.log("add: ", add);
+    fetch("http://localhost:5000/api/campaign/author/" + add)
+      .then((res) => res.json())
+      .then((data) => {
+        setCampaigns(data);
+      });
+  };
   return (
     <div>
       <div
@@ -195,7 +196,6 @@ export default function Profile() {
       ) : (
         <div></div>
       )}
-
       <div className="max-w-7xl mx-auto px-8">
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
@@ -210,7 +210,29 @@ export default function Profile() {
               </TabList>
             </Box>
             <TabPanel value="2">
-              <div>CAMPAIGN</div>
+              <div>
+                <div>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Grid
+                      container
+                      spacing={{ xs: 2, md: 3 }}
+                      columns={{ xs: 4, sm: 8, md: 12 }}
+                    >
+                      {campaigns.map((campaign) => (
+                        <Grid item xs={4} sm={4} md={6}>
+                          <Item className="border-solid border-gray-100 border-2">
+                            <MyCampaign
+                              title={campaign.title}
+                              image={campaign.image}
+                              id={campaign._id}
+                            />
+                          </Item>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                </div>
+              </div>
             </TabPanel>
             <TabPanel value="1">
               <div>
