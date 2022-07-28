@@ -78,7 +78,7 @@ export default function Header() {
                           className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                           href="/#"
                         >
-                          Market
+                          Marketplace
                         </a>
                       </Link>
                       <Link href="/Profile">

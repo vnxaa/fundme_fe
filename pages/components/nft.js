@@ -29,8 +29,8 @@ export default function NFT(props) {
   const truncate = (str, n) => {
     return str?.length > n
       ? str.substr(0, n - 1) +
-      "..." +
-      str.substr(str.length - n, str.length - 1)
+          "..." +
+          str.substr(str.length - n, str.length - 1)
       : str;
   };
 
@@ -62,9 +62,10 @@ export default function NFT(props) {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const contract = new Contract(nftAddress, Fundme.abi, signer);
-    // const cancelTransaction = await contract.cancelListing(props.id);
-    // console.log(cancelTransaction);
-    console.log("buy")
+    // const priceEther = ethers.utils.formatEther(props.price)
+    const buyTransaction = await contract.buyNFT(props.id,{value: ethers.utils.parseEther(ethers.utils.formatEther(props.price))})
+
+    console.log(buyTransaction);
   };
 
   return (
@@ -79,7 +80,11 @@ export default function NFT(props) {
             <p className="text-2xl uppercase text-gray-900 font-bold">
               {cpName} #{props.id}
             </p>
-            by @{truncate(props.author, 5)}
+            {props.state == "market" ? (
+              <div>by @{truncate(props.author, 5)}</div>
+            ) : (
+              ""
+            )}
             <p className="uppercase text-sm text-gray-400"></p>
           </div>
           <div>
@@ -106,12 +111,14 @@ export default function NFT(props) {
                 </div>
               ) : (
                 <div>
-                  {props.state == "sell" ?
+                  {props.state == "sell" ? (
                     <div>
                       <div className="flex">
                         <p className="text-black text-xl font-medium">
                           {ethers.utils.formatEther(props.price)}{" "}
-                          <span className="font-bold text-xl text-black">ETH</span>{" "}
+                          <span className="font-bold text-xl text-black">
+                            ETH
+                          </span>{" "}
                         </p>
                       </div>
                       <button
@@ -121,15 +128,17 @@ export default function NFT(props) {
                         {props.button}
                       </button>
                     </div>
-                    :
+                  ) : (
                     <div>
                       <div>
-                        {props.state == "market" ?
+                        {props.state == "market" ? (
                           <div>
                             <div className="flex">
                               <p className="text-black text-xl font-medium">
                                 {ethers.utils.formatEther(props.price)}{" "}
-                                <span className="font-bold text-xl text-black">ETH</span>{" "}
+                                <span className="font-bold text-xl text-black">
+                                  ETH
+                                </span>{" "}
                               </p>
                             </div>
                             <button
@@ -139,12 +148,12 @@ export default function NFT(props) {
                               {props.button}
                             </button>
                           </div>
-                          :
-                          <div>
-                            No state set
-                          </div>}
+                        ) : (
+                          <div>No state set</div>
+                        )}
                       </div>
-                    </div>}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
