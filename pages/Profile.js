@@ -27,6 +27,7 @@ import useOwnNFT from "./state/useOwnNFT";
 import useMarketSell from "./state/useMarketSell";
 import MyCampaign from "./components/myCampaign";
 import UsePagination from "./components/usePagination";
+import useListedNFT from "./state/useListedNFT";
 export default function Profile() {
   const [address, setAddress] = useState([]);
   const [isUpdate, setUpdate] = useState(false);
@@ -36,8 +37,8 @@ export default function Profile() {
   const [user, setUser] = useState();
   const [avatar, setAvatar] = useState();
 
-  const { ownedNFTs, loading: loadingOwne } = useOwnNFT();
-  const { marketSell, loading: loadingSell } = useMarketSell();
+  const { ownedNFTs: ownedNFTs, loading: loadingOwne } = useOwnNFT();
+  const { listedNFT: listedNFT, loading: loadinglistedNFT } = useListedNFT();
 
   let add = "";
   const handleChange = (e) => {
@@ -45,11 +46,6 @@ export default function Profile() {
       setImage(e.target.files[0]);
     }
   };
-
-  // let ownedNFTs = [];
-  // let data = [];
-  // data = useOwnNFT();
-  // ownedNFTs = data.ownedNFTs;
 
   const update = async (username) => {
     if (image == null) return;
@@ -219,7 +215,7 @@ export default function Profile() {
             <TabPanel value="2">
               <div>
                 <div>
-                  <UsePagination obj={''} list={campaigns} perpage={4}/>
+                  <UsePagination obj={'campaign'} list={campaigns} perpage={4}/>
                 </div>
               </div>
             </TabPanel>
@@ -236,11 +232,11 @@ export default function Profile() {
             </TabPanel>
             <TabPanel value="3">
               <div>
-                {loadingSell ? (
+                {loadinglistedNFT ? (
                   <div>loading...</div>
                 ) : (
                   <div>
-                    <UsePagination obj={'listing'} list={marketSell} perpage={6}/>
+                    <UsePagination obj={'listing'} list={listedNFT} perpage={6}/>
                   </div>
                 )}
               </div>

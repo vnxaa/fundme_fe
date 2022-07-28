@@ -26,6 +26,14 @@ export default function NFT(props) {
     getIdCampaign();
   }, []);
 
+  const truncate = (str, n) => {
+    return str?.length > n
+      ? str.substr(0, n - 1) +
+      "..." +
+      str.substr(str.length - n, str.length - 1)
+      : str;
+  };
+
   const sellNFT = async () => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
@@ -48,6 +56,16 @@ export default function NFT(props) {
     const cancelTransaction = await contract.cancelListing(props.id);
     console.log(cancelTransaction);
   };
+  const buyNFT = async () => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = new Contract(nftAddress, Fundme.abi, signer);
+    // const cancelTransaction = await contract.cancelListing(props.id);
+    // console.log(cancelTransaction);
+    console.log("buy")
+  };
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -61,11 +79,12 @@ export default function NFT(props) {
             <p className="text-2xl uppercase text-gray-900 font-bold">
               {cpName} #{props.id}
             </p>
+            by @{truncate(props.author, 5)}
             <p className="uppercase text-sm text-gray-400"></p>
           </div>
           <div>
             <div className="flex md:flex-row justify-center items-center text-gray-900 pt-3">
-              {!props.isSell ? (
+              {props.state == "own" ? (
                 <div>
                   {" "}
                   <input
@@ -87,19 +106,45 @@ export default function NFT(props) {
                 </div>
               ) : (
                 <div>
-                  <div className="flex">
-                    <p className="text-black text-xl font-medium">
-                      {ethers.utils.formatEther(props.price)}{" "}
-                      <span className="font-bold text-xl text-black">ETH</span>{" "}
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={cancelNFT}
-                    className=" py-2 px-4 bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
-                  >
-                    {props.button}
-                  </button>
+                  {props.state == "sell" ?
+                    <div>
+                      <div className="flex">
+                        <p className="text-black text-xl font-medium">
+                          {ethers.utils.formatEther(props.price)}{" "}
+                          <span className="font-bold text-xl text-black">ETH</span>{" "}
+                        </p>
+                      </div>
+                      <button
+                        onClick={cancelNFT}
+                        className=" py-2 px-4 bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                      >
+                        {props.button}
+                      </button>
+                    </div>
+                    :
+                    <div>
+                      <div>
+                        {props.state == "market" ?
+                          <div>
+                            <div className="flex">
+                              <p className="text-black text-xl font-medium">
+                                {ethers.utils.formatEther(props.price)}{" "}
+                                <span className="font-bold text-xl text-black">ETH</span>{" "}
+                              </p>
+                            </div>
+                            <button
+                              onClick={buyNFT}
+                              className=" py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                            >
+                              {props.button}
+                            </button>
+                          </div>
+                          :
+                          <div>
+                            No state set
+                          </div>}
+                      </div>
+                    </div>}
                 </div>
               )}
             </div>

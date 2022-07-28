@@ -37,14 +37,14 @@ export default function UsePagination(props) {
                             spacing={{ xs: 2, md: 3 }}
                             columns={{ xs: 4, sm: 8, md: 12 }}
                         >
-                            {_DATA.currentData().map(nft => {
+                            {_DATA.currentData().map(collecting => {
                                 return (
                                     <Grid item xs={2} sm={4} md={4}>
                                         <Item className="border-solid border-gray-100 border-2">
                                             <NFT
-                                                id={nft.id}
-                                                uri={nft.tokenURI}
-                                                isSell={false}
+                                                id={collecting.id}
+                                                uri={collecting.tokenURI}
+                                                state="own"
                                                 button="Sell"
                                             />
                                         </Item>
@@ -64,15 +64,15 @@ export default function UsePagination(props) {
                                     spacing={{ xs: 2, md: 3 }}
                                     columns={{ xs: 4, sm: 8, md: 12 }}
                                 >
-                                    {_DATA.currentData().map(nft => {
+                                    {_DATA.currentData().map(listing => {
                                         return (
                                             <Grid item xs={2} sm={4} md={4}>
                                                 <Item className="border-solid border-gray-100 border-2">
                                                     <NFT
-                                                        id={nft.id}
-                                                        uri={nft.tokenURI}
-                                                        isSell={true}
-                                                        price={nft.price}
+                                                        id={listing.id}
+                                                        uri={listing.tokenURI}
+                                                        state="sell"
+                                                        price={listing.price}
                                                         button="Cancel"
                                                     />
                                                 </Item>
@@ -84,27 +84,66 @@ export default function UsePagination(props) {
                         </div>
                         :
                         <div>
-                            <Box sx={{ flexGrow: 1 }}>
-                                <Grid
-                                    container
-                                    spacing={{ xs: 2, md: 3 }}
-                                    columns={{ xs: 4, sm: 8, md: 12 }}
-                                >
-                                    {_DATA.currentData().map(campaign => {
-                                        return (
-                                            <Grid item xs={4} sm={4} md={6}>
-                                                <Item className="border-solid border-gray-100 border-2">
-                                                    <MyCampaign
-                                                        title={campaign.title}
-                                                        image={campaign.image}
-                                                        id={campaign._id}
-                                                    />
-                                                </Item>
-                                            </Grid>
-                                        )
-                                    })}
-                                </Grid>
-                            </Box>
+                            {props.obj == 'market' ?
+                                <div>
+                                    <Box sx={{ flexGrow: 1 }}>
+                                        <Grid
+                                            container
+                                            spacing={{ xs: 2, md: 3 }}
+                                            columns={{ xs: 4, sm: 8, md: 12 }}
+                                        >
+                                            {_DATA.currentData().map(market => {
+                                                return (
+                                                    <Grid item xs={2} sm={4} md={4}>
+                                                        <Item className="border-solid border-gray-100 border-2">
+                                                            <NFT
+                                                                id={market.id}
+                                                                uri={market.tokenURI}
+                                                                state="market"
+                                                                price={market.price}
+                                                                button="Buy"
+                                                                author={market.from}
+                                                            />
+                                                        </Item>
+                                                    </Grid>
+                                                )
+                                            })}
+                                        </Grid>
+                                    </Box>
+                                </div>
+                                :
+                                <div>
+                                    {props.obj == 'campaign' ?
+                                        <div>
+                                            <Box sx={{ flexGrow: 1 }}>
+                                                <Grid
+                                                    container
+                                                    spacing={{ xs: 2, md: 3 }}
+                                                    columns={{ xs: 4, sm: 8, md: 12 }}
+                                                >
+                                                    {_DATA.currentData().map(campaign => {
+                                                        return (
+                                                            <Grid item xs={4} sm={4} md={6}>
+                                                                <Item className="border-solid border-gray-100 border-2">
+                                                                    <MyCampaign
+                                                                        title={campaign.title}
+                                                                        image={campaign.image}
+                                                                        id={campaign._id}
+                                                                    />
+                                                                </Item>
+                                                            </Grid>
+                                                        )
+                                                    })}
+                                                </Grid>
+                                            </Box>
+                                        </div>
+                                        :
+                                        <div>
+                                            No Oject Choose
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
                     }
                 </div>
