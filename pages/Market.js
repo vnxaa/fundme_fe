@@ -9,12 +9,12 @@ export default function Market() {
 
   return (
     <div>
-      <h2 class="text-3xl font-extrabold text-blac sm:text-4xl pt-10 flex justify-center">
+      <h2 class="text-3xl font-extrabold text-white sm:text-4xl pt-10 flex justify-center">
         <span class="block">
           Let buy your own NFTs.
         </span>
       </h2>
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-8 my-6">
         <div className="mt-10">
           {loadingSell ? (
             <div>loading...</div>

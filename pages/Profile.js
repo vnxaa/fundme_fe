@@ -126,8 +126,8 @@ export default function Profile() {
   return (
     <div>
       <div
-        className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-200 border-2 px-5 py-4 text-gray-800 dark:text-gray-50"
-        style={{ marginTop: 100 }}
+        className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-600 border-8 px-5 py-4 text-gray-800 dark:text-gray-50"
+        style={{ marginTop: 100, backgroundColor: '#2C2C39'}}
       >
         <div className="w-full pt-1 text-center -mt-16 mx-auto">
           <a className="block relative">
@@ -198,7 +198,7 @@ export default function Profile() {
       ) : (
         <div></div>
       )}
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-8 text-white">
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
             <Box
@@ -206,9 +206,9 @@ export default function Profile() {
               sx={{ borderBottom: 1, borderColor: "divider" }}
             >
               <TabList onChange={handleTab} aria-label="lab API tabs example">
-                <Tab label="CAMPAIGN" value="2" />
-                <Tab label="COLLECTION" value="1" />
-                <Tab label="LISTING" value="3" />
+                <Tab label="CAMPAIGN" value="2" style={{color:'white'}}/>
+                <Tab label="COLLECTION" value="1" style={{color:'white'}}/>
+                <Tab label="LISTING" value="3" style={{color:'white'}}/>
               </TabList>
             </Box>
             <TabPanel value="2">

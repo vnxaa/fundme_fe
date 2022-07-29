@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/style.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { SignerProvider } from "./state/useSigner";
@@ -10,14 +11,14 @@ const client = new ApolloClient({cache: new InMemoryCache(),uri: GRAPH_URL})
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor:'#141420'}}>
       <SignerProvider>
         <ApolloProvider client={client}>
           <Header/> 
           <Component {...pageProps} />
         </ApolloProvider>
       </SignerProvider>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   )
   

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Web3Modal from "web3modal";
 import { Contract, ethers } from "ethers";
 import Fundme from "../../artifacts/contracts/Fundme.sol/Fundme.json";
-import { nftAddress } from "../../config";export default function NFT(props) {
+import { nftAddress } from "../../config"; export default function NFT(props) {
 
   const [img, setImg] = useState();
   const [cpName, setCpname] = useState();
@@ -28,8 +28,8 @@ import { nftAddress } from "../../config";export default function NFT(props) {
   const truncate = (str, n) => {
     return str?.length > n
       ? str.substr(0, n - 1) +
-          "..." +
-          str.substr(str.length - n, str.length - 1)
+      "..." +
+      str.substr(str.length - n, str.length - 1)
       : str;
   };
 
@@ -62,20 +62,20 @@ import { nftAddress } from "../../config";export default function NFT(props) {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const contract = new Contract(nftAddress, Fundme.abi, signer);
-    const buyTransaction = await contract.buyNFT(props.id,{value: ethers.utils.parseEther(ethers.utils.formatEther(props.price))})
+    const buyTransaction = await contract.buyNFT(props.id, { value: ethers.utils.parseEther(ethers.utils.formatEther(props.price)) })
     console.log(buyTransaction);
   };
 
   return (
-    <div className="w-full flex justify-center items-center">
-      <div className="w-full p-4">
-        <div className="card flex flex-col justify-center p-10 bg-white rounded-lg">
+    <div className="w-full flex justify-center items-center rounded-lg text-white text-center" style={{ backgroundColor: '#454452' }}>
+      <div className="w-full p-2">
+        <div className="card flex flex-col justify-center p-10 rounded-lg" style={{ backgroundColor: '#2C2C39' }}>
           <div
-            className="h-48 w-full bg-contain bg-no-repeat bg-center"
+            className="h-48 w-full bg-contain bg-no-repeat bg-center mb-4"
             style={{ backgroundImage: `url(${img})` }}
           />
           <div className="prod-title">
-            <p className="text-2xl uppercase text-gray-900 font-bold">
+            <p className="text-2xl uppercase font-bold">
               {cpName} #{props.id}
             </p>
             {props.state == "market" ? (
@@ -85,8 +85,9 @@ import { nftAddress } from "../../config";export default function NFT(props) {
             )}
             <p className="uppercase text-sm text-gray-400"></p>
           </div>
+
           <div>
-            <div className="flex md:flex-row justify-center items-center text-gray-900 pt-3">
+            <div className="flex md:flex-row justify-center items-center pt-3">
               {props.state == "own" ? (
                 <div>
                   {" "}
@@ -98,7 +99,7 @@ import { nftAddress } from "../../config";export default function NFT(props) {
                     onChange={(e) => {
                       setPrice(e.target.value);
                     }}
-                    className="py-2 px-2 mx-2 border-solid border-gray-500 border-2 focus:ring-offset-indigo-200 w-20 transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                    className="text-black py-2 px-2 mx-2 border-solid border-gray-500 border-2 focus:ring-offset-indigo-200 w-20 transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                   ></input>
                   <button
                     onClick={sellNFT}
@@ -112,16 +113,16 @@ import { nftAddress } from "../../config";export default function NFT(props) {
                   {props.state == "sell" ? (
                     <div>
                       <div className="flex">
-                        <p className="text-black text-xl font-medium">
+                        <p className="text-xl font-medium">
                           {ethers.utils.formatEther(props.price)}{" "}
-                          <span className="font-bold text-xl text-black">
+                          <span className="font-bold text-xl">
                             ETH
                           </span>{" "}
                         </p>
                       </div>
                       <button
                         onClick={cancelNFT}
-                        className=" py-2 px-4 bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                        className="mt-5 py-2 px-4 bg-red-600 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
                       >
                         {props.button}
                       </button>
@@ -132,16 +133,16 @@ import { nftAddress } from "../../config";export default function NFT(props) {
                         {props.state == "market" ? (
                           <div>
                             <div className="flex">
-                              <p className="text-black text-xl font-medium">
+                              <p className="text-xl font-medium">
                                 {ethers.utils.formatEther(props.price)}{" "}
-                                <span className="font-bold text-xl text-black">
+                                <span className="font-bold text-xl">
                                   ETH
                                 </span>{" "}
                               </p>
                             </div>
                             <button
                               onClick={buyNFT}
-                              className=" py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
+                              className="mt-2 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg "
                             >
                               {props.button}
                             </button>

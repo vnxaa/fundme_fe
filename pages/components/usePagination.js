@@ -40,14 +40,12 @@ export default function UsePagination(props) {
                             {_DATA.currentData().map(collecting => {
                                 return (
                                     <Grid item xs={2} sm={4} md={4}>
-                                        <Item className="border-solid border-gray-100 border-2">
-                                            <NFT
-                                                id={collecting.id}
-                                                uri={collecting.tokenURI}
-                                                state="own"
-                                                button="Sell"
-                                            />
-                                        </Item>
+                                        <NFT
+                                            id={collecting.id}
+                                            uri={collecting.tokenURI}
+                                            state="own"
+                                            button="Sell"
+                                        />
                                     </Grid>
                                 )
                             })}
@@ -67,15 +65,13 @@ export default function UsePagination(props) {
                                     {_DATA.currentData().map(listing => {
                                         return (
                                             <Grid item xs={2} sm={4} md={4}>
-                                                <Item className="border-solid border-gray-100 border-2">
-                                                    <NFT
-                                                        id={listing.id}
-                                                        uri={listing.tokenURI}
-                                                        state="sell"
-                                                        price={listing.price}
-                                                        button="Cancel"
-                                                    />
-                                                </Item>
+                                                <NFT
+                                                    id={listing.id}
+                                                    uri={listing.tokenURI}
+                                                    state="sell"
+                                                    price={listing.price}
+                                                    button="Cancel"
+                                                />
                                             </Grid>
                                         )
                                     })}
@@ -95,16 +91,14 @@ export default function UsePagination(props) {
                                             {_DATA.currentData().map(market => {
                                                 return (
                                                     <Grid item xs={2} sm={4} md={4}>
-                                                        <Item className="border-solid border-gray-100 border-2">
-                                                            <NFT
-                                                                id={market.id}
-                                                                uri={market.tokenURI}
-                                                                state="market"
-                                                                price={market.price}
-                                                                button="Buy"
-                                                                author={market.from}
-                                                            />
-                                                        </Item>
+                                                        <NFT
+                                                            id={market.id}
+                                                            uri={market.tokenURI}
+                                                            state="market"
+                                                            price={market.price}
+                                                            button="Buy"
+                                                            author={market.from}
+                                                        />
                                                     </Grid>
                                                 )
                                             })}
@@ -123,14 +117,12 @@ export default function UsePagination(props) {
                                                 >
                                                     {_DATA.currentData().map(campaign => {
                                                         return (
-                                                            <Grid item xs={4} sm={4} md={6}>
-                                                                <Item className="border-solid border-gray-100 border-2">
-                                                                    <MyCampaign
-                                                                        title={campaign.title}
-                                                                        image={campaign.image}
-                                                                        id={campaign._id}
-                                                                    />
-                                                                </Item>
+                                                            <Grid item xs={4} sm={8} md={12}>
+                                                                <MyCampaign
+                                                                    title={campaign.title}
+                                                                    image={campaign.image}
+                                                                    id={campaign._id}
+                                                                />
                                                             </Grid>
                                                         )
                                                     })}
@@ -149,13 +141,14 @@ export default function UsePagination(props) {
                 </div>
             }
             <Pagination
-                className="flex justify-center mt-5"
+                className="flex justify-center mt-5 text-white"
                 count={count}
                 size="large"
                 page={page}
                 variant="outlined"
                 shape="rounded"
                 onChange={handleChange}
+                color="primary"
             />
         </div>
     );

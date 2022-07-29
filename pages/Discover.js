@@ -6,8 +6,8 @@ import UsePagination from "./components/usePagination";
 export default function Discover() {
 
   const [campaigns, setCampaigns] = useState([]);
-  const { marketSell, loading: loadingSell } = useMarketSell();
-  const list = marketSell.slice(0, 3);
+  const { marketSell: marketSell, loading: loadingSell } = useMarketSell();
+
   const getData = () => {
     fetch("http://localhost:5000/api/campaign/")
       .then((res) => res.json())
@@ -21,9 +21,9 @@ export default function Discover() {
   }, []);
 
   return (
-    <div className="">
+    <div style={{backgroundColor:'#141420'}}>
       {/* statictis  */}
-      <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section className="px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-extrabold leading-9 text-white sm:text-4xl sm:leading-10">
             Bring your campaign to life.
@@ -32,13 +32,13 @@ export default function Discover() {
             on fundme:
           </p>
         </div>
-        <div className="mt-10 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8">
+        <div className="mt-10 p-4 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8 border-solid rounded-lg" style={{backgroundColor:'#2C2C39'}}>
           <div>
             <p className="text-5xl font-extrabold leading-none text-white">
               2063
             </p>
             <p className="mt-2 text-base font-medium leading-6 text-white uppercase">
-              projects
+              campaigns
             </p>
           </div>
           <div className="mt-10 sm:mt-0">
@@ -60,8 +60,8 @@ export default function Discover() {
         </div>
       </section>
       {/* top campaign */}
-      <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="bg-slate-900 dark:bg-gray-800 ">
+      <section className="px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="">
           <div className="container justify-between mx-auto px-6 flex relative py-16">
             <h2 className="text-3xl font-extrabold text-black dark:text-white sm:text-4xl">
               <span className="block" style={{ color: "white" }}>
@@ -95,8 +95,8 @@ export default function Discover() {
         </Carousel>
       </section>
       {/* nfts */}
-      <section className="bg-slate-900 dark:bg-gray-800 px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="bg-slate-900 dark:bg-gray-800 ">
+      <section className="px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="">
           <div className="container justify-between mx-auto px-6 flex relative py-16">
             <h2 className="text-3xl font-extrabold text-black dark:text-white sm:text-4xl">
               <span className="block" style={{ color: "white" }}>
@@ -121,7 +121,7 @@ export default function Discover() {
               <div>loading...</div>
             ) : (
               <div>
-                <UsePagination obj={'market'} list={list} perpage={6} />
+                <UsePagination obj={'market'} list={marketSell.slice(0, 3)} perpage={6} />
               </div>
             )}
           </div>
