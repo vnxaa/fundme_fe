@@ -62,19 +62,19 @@ We already deployed contracts to [Rinkeby](https://rinkeby.etherscan.io/) networ
 ## Profile
 
 <p align=center>
-<img src="../../fundme_clienv3/fundme_fe/screenshot/profile.png">
+<img src="../fundme_fe/screenshot/icon.png">
 </p>
 
 ## Marketplace
 
 <p align=center>
-<img src="../../fundme_clienv3/fundme_fe/screenshot/market.png">
+<img src="../fundme_fe/screenshot/market.png">
 </p>
 
 ## Campaign
 
 <p align=center>
-<img src="../../fundme_clienv3/fundme_fe/screenshot/campaign.png">
+<img src="../fundme_fe/screenshot/campaign.png">
 </p>
 
 
