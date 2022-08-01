@@ -1,5 +1,5 @@
 <p align=center>
-<img src="../../fundme_clienv3/fundme_fe/screenshot/icon.png">
+<img src="screenshot/icon.png">
 </p>
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
@@ -62,19 +62,19 @@ We already deployed contracts to [Rinkeby](https://rinkeby.etherscan.io/) networ
 ## Profile
 
 <p align=center>
-<img src="../fundme_fe/screenshot/icon.png">
+<img src="screenshot/profile.png">
 </p>
 
 ## Marketplace
 
 <p align=center>
-<img src="../fundme_fe/screenshot/market.png">
+<img src="screenshot/market.png">
 </p>
 
 ## Campaign
 
 <p align=center>
-<img src="../fundme_fe/screenshot/campaign.png">
+<img src="screenshot/campaign.png">
 </p>
 
 
