@@ -34,7 +34,7 @@ class Countdown extends React.Component {
                         <div>
                             Campaign End
                         </div> :
-                        <div className='text-black flex pt-6'>
+                        <div className='text-white flex pt-6'>
                             <div className="days"><pre>{this.state.days} Days : </pre></div>
                             <div className="hours"><pre>{this.state.hours} Hours : </pre></div>
                             <div className="minutes"><pre>{this.state.minutes} Minutes : </pre></div>

@@ -94,7 +94,7 @@ export default function Reward(props) {
 
   return (
     <div>
-      <div className="flex-row gap-4 flex justify-center items-center p-14">
+      <div className="flex-row gap-4 flex justify-center items-center p-14" style={{  backgroundColor: '#2C2C39'}}>
         <div className="flex-shrink-0 w-32">
           <div
             class="h-32 w-32 bg-contain bg-no-repeat bg-center"

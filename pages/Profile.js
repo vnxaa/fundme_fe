@@ -140,7 +140,7 @@ export default function Profile() {
         </div>
         <div className="w-full">
           <div className="text-center mb-6">
-            <p className="text-gray-800 dark:text-white text-xl font-medium">
+            <p className="text-white dark:text-white text-xl font-medium">
               {user}
             </p>
             <div className="inline-flex items-center bg-white leading-none ${props.textColor} rounded-full p-2 shadow text-teal text-sm">
@@ -163,8 +163,8 @@ export default function Profile() {
       </div>
       {isUpdate ? (
         <div
-          className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-200 border-2 px-5 py-4 text-gray-800 dark:text-gray-50"
-          style={{ marginTop: 2 }}
+          className="w-full mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 border-solid border-gray-600 border-8 px-5 py-4 text-gray-800 dark:text-gray-50"
+           style={{ marginTop: 2, backgroundColor: '#2C2C39'}}
         >
           <div className="flex">
             <input

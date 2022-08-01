@@ -33,7 +33,7 @@ export default function campaignid() {
     //   ref.current.click();
     // }, 100); //miliseconds
 
-    if(router.isReady){
+    if (router.isReady) {
       loadPage();
     }
   }, [router.isReady]);
@@ -195,17 +195,23 @@ export default function campaignid() {
             </div>
           </div> */}
 
-      <div className="bg-white dark:bg-gray-800 flex relative z-20 items-center">
+      <div
+        className=" dark:bg-gray-800 flex relative z-20 items-center"
+        style={{ backgroundColor: "#141420" }}
+      >
         <div className="container mx-auto px-6 flex flex-col justify-between items-center relative py-8">
           <div className="flex flex-col">
-            <div className="block w-full mx-auto mt-6 md:mt-0 relative">
+            <div
+              className="block w-full mx-auto mt-6 md:mt-0 relative border-4 rounded-md mb-5 "
+              style={{ borderColor: "#454452" }}
+            >
               <img src={image} className="max-w-xs md:max-w-2xl m-auto" />
             </div>
-            <h1 className="font-light w-full uppercase text-center text-4xl sm:text-5xl dark:text-white text-gray-800">
+            <h1 className="font-md w-full uppercase text-center text-4xl sm:text-5xl dark:text-white text-white">
               {title}
             </h1>
 
-            <div className="flex text-gray-800  text-black justify-center">
+            <div className="flex text-gray-800  text-white justify-center">
               <Countdown deadline={enddate} />
             </div>
             <div className="flex items-center justify-center mt-4">
@@ -221,12 +227,12 @@ export default function campaignid() {
               <a
                 href={whitepaper}
                 target="_blank"
-                className="uppercase py-2 px-4 bg-transparent border-2 border-gray-800 text-gray-800 dark:text-white hover:bg-gray-800 hover:text-white text-md"
+                className="uppercase py-2 px-4 bg-transparent border-2 border-gray-800 text-white dark:text-white hover:bg-gray-800 hover:text-white text-md"
               >
                 Whitepaper
               </a>
             </div>
-            <h2 className="font-light max-w-2xl mx-auto w-full text-xl dark:text-white text-gray-500 text-center py-8">
+            <h2 className="font-light max-w-2xl mx-auto w-full text-xl dark:text-white text-white text-center py-8">
               {content}
             </h2>
           </div>
@@ -234,14 +240,20 @@ export default function campaignid() {
       </div>
 
       <div className="container flex flex-col mx-auto w-full items-center justify-center">
-        <div className="px-4 py-5 sm:px-6 w-full border dark:bg-gray-800 bg-white  mb-2 rounded-md">
-          <h3 className="text-center text-lg leading-6 font-medium text-gray-900 dark:text-white">
+        <div
+          className="px-4 py-5 sm:px-6 w-full border-4 dark:bg-gray-800   mb-5 rounded-md"
+          style={{ backgroundColor: "#2C2C39", borderColor: "#454452" }}
+        >
+          <h3 className="text-center text-lg leading-6 font-medium text-white dark:text-white">
             NFT REWARDS
           </h3>
         </div>
         <ul className="flex flex-col">
           <li className="border-gray-400 flex flex-row mb-2">
-            <div className="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
+            <div
+              className="transition duration-500 relative shadow ease-in-out transform hover:-translate-y-1 hover:shadow-lg select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4"
+              style={{ backgroundColor: "#454452" }}
+            >
               <Carousel
                 infiniteLoop="true"
                 stopOnHover="true"
