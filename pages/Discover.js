@@ -21,7 +21,7 @@ export default function Discover() {
   }, []);
 
   return (
-    <div style={{backgroundColor:'#141420'}}>
+    <div style={{ backgroundColor: '#141420' }}>
       {/* statictis  */}
       <section className="px-4 py-12 mx-auto sm:py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
@@ -32,7 +32,7 @@ export default function Discover() {
             on fundme:
           </p>
         </div>
-        <div className="mt-10 p-4 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8 border-solid rounded-lg" style={{backgroundColor:'#2C2C39'}}>
+        <div className="mt-10 p-4 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8 border-solid rounded-lg" style={{ backgroundColor: '#2C2C39' }}>
           <div>
             <p className="text-5xl font-extrabold leading-none text-white">
               2063
@@ -70,12 +70,14 @@ export default function Discover() {
             </h2>
             <div className="lg:mt-0 lg:flex-shrink-0">
               <div className="ml-3 inline-flex rounded-md shadow">
-                <button
-                  type="button"
-                  className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                >
-                  View all
-                </button>
+                <a href="/AllDiscover">
+                  <button
+                    type="button"
+                    className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                  >
+                    View all
+                  </button>
+                </a>
               </div>
             </div>
           </div>
@@ -106,12 +108,12 @@ export default function Discover() {
             <div className="lg:mt-0 lg:flex-shrink-0">
               <div className="ml-3 inline-flex rounded-md shadow">
                 <a href="Market">
-                <button
-                  type="button"
-                  className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                >
-                  View all
-                </button>
+                  <button
+                    type="button"
+                    className="py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                  >
+                    View all
+                  </button>
                 </a>
               </div>
             </div>

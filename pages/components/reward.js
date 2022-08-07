@@ -3,17 +3,12 @@ import Web3Modal from "web3modal";
 import { Contract, ethers } from "ethers";
 import Fundme from "../../artifacts/contracts/Fundme.sol/Fundme.json";
 import { nftAddress } from "../../config";
-const Web3 = require("web3");
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
-import GET_OWN_NFTS from "../state/useOwnNFT";
 import useOwnNFT from "../state/useOwnNFT";
 import Axios from "axios";
 
 export default function Reward(props) {
   const [img, setImg] = useState();
   const [fund, setFund] = useState();
-  const [claimm, setClaim] = useState(false);
 
   const getNFT = async () => {
     fetch("http://localhost:5000/api/nfts/" + props.nfts)
@@ -103,7 +98,7 @@ export default function Reward(props) {
 
           <div className="w-full h-4 bg-gray-500 rounded-full mt-3">
             <div
-              className="h-full text-center text-xs text-white bg-indigo-500 rounded-full text-black"
+              className="h-full text-center text-xs text-white bg-indigo-500 rounded-full"
               style={{
                 width: `${(Number(fund) / Number(props.target)) * 100}%`,
                 maxWidth: "100%",

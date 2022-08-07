@@ -4,6 +4,7 @@ import { Contract, ethers } from "ethers";
 import Fundme from "../../artifacts/contracts/Fundme.sol/Fundme.json";
 import { nftAddress } from "../../config"; export default function NFT(props) {
 
+  const urlDetail = "/campaignId/nft/" + props.id;
   const [img, setImg] = useState();
   const [cpName, setCpname] = useState();
   const [price, setPrice] = useState();
@@ -70,10 +71,12 @@ import { nftAddress } from "../../config"; export default function NFT(props) {
     <div className="w-full flex justify-center items-center rounded-lg text-white text-center" style={{ backgroundColor: '#454452' }}>
       <div className="w-full p-2">
         <div className="card flex flex-col justify-center p-10 rounded-lg" style={{ backgroundColor: '#2C2C39' }}>
+          <a href={urlDetail}>
           <div
             className="h-48 w-full bg-contain bg-no-repeat bg-center mb-4"
             style={{ backgroundImage: `url(${img})` }}
           />
+          </a>
           <div className="prod-title">
             <p className="text-2xl uppercase font-bold">
               {cpName} #{props.id}

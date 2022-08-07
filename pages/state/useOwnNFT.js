@@ -18,7 +18,6 @@ const useOwnNFT =  ()=>{
   const { address } = useSigner();
   const  {data,loading}  = useQuery(GET_OWN_NFTS,{variables: {owner: address}})
   const ownedNFTs = data?.nfts;
-
   return {ownedNFTs,loading};
 }
 

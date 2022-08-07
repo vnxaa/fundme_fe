@@ -115,7 +115,6 @@ export default function Profile() {
   ///load campaign
   const [campaigns, setCampaigns] = useState([]);
   const getData = () => {
-    console.log("add: ", add);
     fetch("http://localhost:5000/api/campaign/author/" + add)
       .then((res) => res.json())
       .then((data) => {

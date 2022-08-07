@@ -17,7 +17,7 @@ export default function Campaign(props) {
           />
         </div>
         <div className="text-left sm:w-2/3 lg:w-2/5 flex flex-col justify-evenly relative z-20">
-          <h1 className="text-xl  uppercase text-4xl sm:text-6xl font-black flex flex-col leading-none text-white">
+          <h1 className="text-xl  uppercase sm:text-6xl font-black flex flex-col leading-none text-white">
             {props.title}
             <br />
           </h1>

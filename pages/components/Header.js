@@ -4,9 +4,9 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import Profile from "../Profile";
 import Image from "next/image";
 const logo = require("../../public/logo.png");
+
 export default function Header() {
   const [address, setAddress] = useState([]);
   const [isLogin, setLogin] = useState(false);
@@ -21,7 +21,7 @@ export default function Header() {
       data: { address: address },
     });
     promise
-      .then((result) => {})
+      .then((result) => { })
       .catch((err) => {
         console.log(err.response.data);
       });
@@ -36,7 +36,6 @@ export default function Header() {
       const signer = await provider.getSigner();
       const signerAddress = await signer.getAddress();
       login(signerAddress);
-
       setAddress(signerAddress);
     } catch (error) {
       console.log(error);
@@ -57,7 +56,7 @@ export default function Header() {
                   {isLogin ? (
                     <div>
                       {" "}
-                      <Link href="/Discover">
+                      <Link href="/AllDiscover">
                         <a
                           className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                           href="/#"
@@ -93,7 +92,7 @@ export default function Header() {
                   ) : (
                     <div>
                       {" "}
-                      <Link href="/Discover">
+                      <Link href="/AllDiscover">
                         <a
                           className="text-white   dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                           href="/#"

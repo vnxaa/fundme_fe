@@ -1,19 +1,19 @@
 import React from "react";
 import Axios from "axios";
-import Login from "./components/Login";
 import { useEffect, useState } from "react";
-import Web3Modal from "web3modal";
-import { ethers } from "ethers";
 import { storage } from "../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { Router, useRouter } from "next/router";
 import useSigner from "./state/useSigner";
+import validator from 'validator';
 
 export default function Campaign() {
+
   const router = useRouter();
 
   const { signer, address } = useSigner();
+
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [content, setContent] = useState("");
@@ -21,9 +21,24 @@ export default function Campaign() {
   const [whitepaper, setWhitepaper] = useState("");
   const [website, setWebsite] = useState("");
   const [date, setDate] = useState("");
-  const [campaignId, setCampaignId] = useState("");
 
   const handleChange = (e) => {
+    let file = e.target.files[0];
+    if (!file) {
+      setFileErr("Please select a file");
+      setFileValid(false);
+      console.log('rong')
+      return;
+    }
+    if (file.size > 10e6) {
+      setFileErr("Please upload a file smaller than 10 MB");
+      setFileValid(false);
+      console.log('lon')
+      return;
+    }
+    setFileErr('');
+    setFileValid(true);
+    console.log(fileValid)
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
@@ -51,11 +66,118 @@ export default function Campaign() {
     promise
       .then((result) => {
         const id = result.data.campaign._id;
-
         router.push("./campaignId/" + id);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
+
+  const [titleErr, setTitleErr] = useState("");
+  const [fileErr, setFileErr] = useState("");
+  const [contentErr, setContentErr] = useState("");
+  const [targetErr, setTargetErr] = useState("");
+  const [whitepaperErr, setWhitepaperErr] = useState("");
+  const [websiteErr, setWebsiteErr] = useState("");
+  const [dateErr, setDateErr] = useState("");
+
+  const [titleValid, setTitleValid] = useState(false);
+  const [fileValid, setFileValid] = useState(false);
+  const [contentValid, setContentValid] = useState(false);
+  const [targetValid, setTargetValid] = useState(false);
+  const [whitepaperValid, setWhitepaperValid] = useState(false);
+  const [websiteValid, setWebsiteValid] = useState(false);
+  const [dateValid, setDateValid] = useState(false);
+
+  const validateTitle = () => {
+    if (title.length < 1) {
+      setTitleErr("Title require!");
+      setTitleValid(false);
+      return;
+    }
+    if (title.length > 100) {
+      setTitleErr("Title too long!");
+      setTitleValid(false);
+      return;
+    }
+    setTitleErr("");
+    setTitleValid(true);
+  }
+
+  const validateContent = () => {
+    if (content.length < 1) {
+      setContentErr("Content require!");
+      setContentValid(false);
+      return;
+    }
+    if (content.length > 5000) {
+      setContentErr("Content too long!");
+      setContentValid(false);
+      return;
+    }
+    setContentErr("");
+    setContentValid(true);
+  }
+
+  const validateTarget = () => {
+    if (target.length < 1) {
+      setTargetErr("Target require!");
+      setTargetValid(false);
+      return;
+    }
+    if (!validator.isNumeric(target)) {
+      setTargetErr("Target must be numeric!");
+      setTargetValid(false);
+      return;
+    }
+    if (Number(target) == 0) {
+      setTargetErr("Target must be greater than zero!");
+      setTargetValid(false);
+      return;
+    }
+    setTargetErr("");
+    setTargetValid(true);
+  }
+
+  const validateWhitepaper = () => {
+    if (whitepaper.length < 1) {
+      setWhitepaperErr("Whitepaper require!");
+      setWhitepaperValid(false);
+      return;
+    }
+    if (!validator.isURL(whitepaper)) {
+      setWhitepaperErr("Whitepaper must be an URL!");
+      setWhitepaperValid(false);
+      return;
+    }
+    setWhitepaperErr('');
+    setWhitepaperValid(true);
+  }
+
+  const validateWebsite = () => {
+    if (website.length < 1) {
+      setWebsiteErr("Website require!");
+      setWebsiteValid(false);
+      return;
+    }
+    if (!validator.isURL(website)) {
+      setWebsiteErr("Website must be an URL!");
+      setWebsiteValid(false);
+      return;
+    }
+    setWebsiteErr('');
+    setWebsiteValid(true);
+  }
+
+  const validateDate = () => {
+    const today = new Date();
+    const thendate = new Date(date);
+    if (today.getTime() >= thendate.getTime()) {
+      setDateErr("End date must after today!");
+      setDateValid(false);
+      return;
+    }
+    setDateErr("");
+    setDateValid(true);
+  }
 
   return (
     <div>
@@ -78,25 +200,30 @@ export default function Campaign() {
               <div className="w-full">
                 <div className=" relative ">
                   Title
+                  {/* input title  */}
                   <input
                     type="text"
                     id="search-form-price"
-                    onChange={(e) => {
-                      setTitle(e.target.value);
-                    }}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className="text-white rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Your title"
                     style={{ backgroundColor: '#454452' }}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      validateTitle
+                    }}
+                    onBlur={validateTitle}
                   />
+                  {titleErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{titleErr}</div>}
                 </div>
               </div>
-
+              {/* input file  */}
               <input
                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 type="file"
                 onChange={handleChange}
               />
-
+              {fileErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{fileErr}</div>}
+              {/* input content  */}
               <div className="w-full">
                 <div className=" relative ">
                   Content
@@ -106,13 +233,15 @@ export default function Campaign() {
                     onChange={(e) => {
                       setContent(e.target.value);
                     }}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className="text-white rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Your Content"
                     style={{ backgroundColor: '#454452' }}
+                    onBlur={validateContent}
                   />
+                  {contentErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{contentErr}</div>}
                 </div>
               </div>
-
+              {/* input target  */}
               <div className="w-full">
                 <div className=" relative ">
                   Target
@@ -122,13 +251,15 @@ export default function Campaign() {
                     onChange={(e) => {
                       setTarget(e.target.value);
                     }}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className="text-white rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Your Target"
                     style={{ backgroundColor: '#454452' }}
+                    onBlur={validateTarget}
                   />
+                  {targetErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{targetErr}</div>}
                 </div>
               </div>
-
+              {/* input white papper  */}
               <div className="w-full">
                 <div className=" relative ">
                   Whitepaper
@@ -138,13 +269,15 @@ export default function Campaign() {
                     onChange={(e) => {
                       setWhitepaper(e.target.value);
                     }}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className="text-white rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Your Whitepaper"
                     style={{ backgroundColor: '#454452' }}
+                    onBlur={validateWhitepaper}
                   />
+                  {whitepaperErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{whitepaperErr}</div>}
                 </div>
               </div>
-
+              {/* input website  */}
               <div className="w-full">
                 <div className=" relative ">
                   Website
@@ -154,39 +287,49 @@ export default function Campaign() {
                     onChange={(e) => {
                       setWebsite(e.target.value);
                     }}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className="text-white rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                     placeholder="Your Website"
                     style={{ backgroundColor: '#454452' }}
+                    onBlur={validateWebsite}
                   />
+                  {websiteErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{websiteErr}</div>}
                 </div>
               </div>
-
-              <div>
+              {/* input date  */}
+              <div className="w-full">
+                Expiration date
                 <div className="flex items-center justify-center">
-                  <div className="datepicker relative form-floating mb-3 xl:w-96">
-                    Expiration date
+                  <div className="w-full relative form-floating mb-3 xl:w-96">
                     <input
                       type="date"
                       onChange={(e) => {
                         setDate(e.target.value);
                       }}
-                      className="text-white form-control block w-full px-3 py-1.5 text-base font-normal  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      className="form-control block w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-400 focus:bg-white focus:border-blue-600 focus:outline-none"
                       placeholder="Select a date"
                       style={{ backgroundColor: '#454452' }}
+                      onBlur={validateDate}
                     />
+                    {dateErr && <div className="validation text-yellow-500" style={{ display: 'block' }}>*{dateErr}</div>}
                   </div>
                 </div>
               </div>
 
               <div>
                 <span className="block w-full rounded-md shadow-sm">
-                  <button
-                    onClick={createCampaign}
-                    type="button"
-                    className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                  >
-                    Create
-                  </button>
+                  {titleValid && fileValid && contentValid && targetValid && whitepaperValid && websiteValid & dateValid ?
+                    <button
+                      onClick={createCampaign}
+                      type="button"
+                      className="py-2 px-4 text-white w-full bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                    >
+                      Create
+                    </button>
+                    :
+                    <button type="button" className="py-2 px-4 text-white w-full bg-blue-600 rounded focus:outline-none disabled:opacity-50" disabled>
+                      Create
+                    </button>
+                  }
                 </span>
               </div>
             </div>

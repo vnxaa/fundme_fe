@@ -1,15 +1,14 @@
 import React from "react";
 import { Router, useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
-import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import Axios from "axios";
 const Web3 = require("web3");
 import Countdown from "../components/coutdown";
-import History from "../components/history";
 import Reward from "../components/reward";
 import { Carousel } from "react-responsive-carousel";
 import useSigner from "../state/useSigner";
+
 export default function campaignid() {
   const { signer, address } = useSigner();
   const [content, setContent] = useState();
@@ -29,10 +28,6 @@ export default function campaignid() {
   const id = router.query.id;
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   ref.current.click();
-    // }, 100); //miliseconds
-
     if (router.isReady) {
       loadPage();
     }
@@ -78,10 +73,6 @@ export default function campaignid() {
 
   async function donate() {
     var web3 = new Web3(Web3.givenProvider);
-    // const accounts = await ethereum.request({
-    //   method: "eth_requestAccounts",
-    // });
-    // const address = accounts[0];
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const signerAddress = await signer.getAddress();
@@ -106,7 +97,6 @@ export default function campaignid() {
         (data) => {
           setAllhistory(data.fund);
           let sum = 0;
-
           data.fund.map((his) => (sum += Number(his.amount)));
           setFund(sum);
         },
@@ -180,21 +170,6 @@ export default function campaignid() {
         </div>
       </div>
 
-      {/* <div>
-            <div className="bg-white rounded-lg bottom-0 w-72 shadow block p-4 m-auto fixed z-50 bottom-0">
-              <div>
-                <span className="text-xs font-light inline-block py-1 px-2 uppercase rounded-full text-white bg-pink-300">
-                  Task in progress
-                </span>
-              </div>
-              <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
-                <div className="w-3/4 h-full text-center text-xs text-white bg-pink-300 rounded-full">
-                  75%
-                </div>
-              </div>
-            </div>
-          </div> */}
-
       <div
         className=" dark:bg-gray-800 flex relative z-20 items-center"
         style={{ backgroundColor: "#141420" }}
@@ -211,7 +186,7 @@ export default function campaignid() {
               {title}
             </h1>
 
-            <div className="flex text-gray-800  text-white justify-center">
+            <div className="flex  text-white justify-center">
               <Countdown deadline={enddate} />
             </div>
             <div className="flex items-center justify-center mt-4">
@@ -280,7 +255,7 @@ export default function campaignid() {
         </ul>
       </div>
 
-      {/* <div className="container flex flex-col mx-auto w-full items-center justify-center">
+      <div className="container flex flex-col mx-auto w-full items-center justify-center">
         <div className="px-4 py-5 sm:px-6 w-full border dark:bg-gray-800 bg-white  mb-2 rounded-md">
           <h3 className="text-center text-lg leading-6 font-medium text-gray-900 dark:text-white">
             HISTORY
@@ -539,7 +514,7 @@ export default function campaignid() {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
